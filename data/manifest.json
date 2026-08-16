@@ -1,0 +1,38 @@
+{
+  "date": "2026-08-16",
+  "seed": 42,
+  "datasets": {
+    "tr_mmlu": {
+      "file": "data\\tr_mmlu.csv",
+      "items": 6200,
+      "schema": "MC",
+      "note": "full split, cached"
+    },
+    "tumlu_tr": {
+      "file": "data\\tumlu_tr.csv",
+      "items": 945,
+      "schema": "MC",
+      "note": "dev=45 test=900 (verified live)"
+    },
+    "ragturk_formal5k": {
+      "file": "data\\ragturk_formal5k.csv",
+      "items": 5579,
+      "articles": 2790,
+      "schema": "QA-pair",
+      "note": "full parse of 2,790 Hub JSONs"
+    },
+    "ragturk_informal6k": {
+      "file": "data\\ragturk_informal6k.csv",
+      "items": 0,
+      "articles": 0,
+      "schema": "QA-pair",
+      "note": "Hub contains ONLY .DS_Store (verified live 2026-08-16); 0 data files"
+    },
+    "halluverse_tr": {
+      "file": "data\\halluverse_tr.csv",
+      "items": 780,
+      "schema": "QA-pair+flip-control",
+      "note": "QA_tr.xlsx full (780 rows)"
+    }
+  }
+}
