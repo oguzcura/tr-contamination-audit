@@ -1,0 +1,100 @@
+{"i": 0, "subject": "Yerel Yönetimler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) Denetim"}
+{"i": 1, "subject": "Ehliyet Sınavı", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) İdari para cezası verilir."}
+{"i": 2, "subject": "Adalet", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[Bu soru, sitelerin sahiplik yapısı sınıflandırması ile ilgili. Seçenekler arasın]"}
+{"i": 3, "subject": "İnsan Kaynakları Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[We need answer in Turkish. Soru: Metinden hangisi çıkarılamaz? Metin: Edirneli b]"}
+{"i": 4, "subject": "Kim 500 Milyar İster", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Doğru cevap **D) Michael Jackson**'dır.\n\n**Neden:**\n- Michael Jackson, vitiligo hastalığı nedeniyle cilt rengi zamanla beyaza dönmüştür. Bu yüzden \"siyahi olarak doğup beyaz olarak ölen\" ifadesi onu tanımlar.\n- Beşiktaş taraftarı, Michael Jackson'ın \"Black or White\" şarkısındaki sözleri ve \"Beat It\" şarkısındaki \"Beat it\" ifadesini \"Beşiktaş\" gibi yorumlayarak (özellikle \"Black or White\"daki \"It's black, it's white\" kısmını \"Beşiktaş\" diye duyup) onu esprili bir şekilde \"En Büyük Beşiktaşlı\" ilan etmiştir. Bu, taraftar kültüründe bilinen bir mizah konusudur."}
+{"i": 5, "subject": "KPSS Denemeleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) Yüksek Seçim Kurulu"}
+{"i": 6, "subject": "Havacılık Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Portföy Yatırımları"}
+{"i": 7, "subject": "Emlak ve Emlak Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Türkiye’de ve yurt dışında elde edilen tüm kazanç ve iratlar"}
+{"i": 8, "subject": "İnsan Kaynakları Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "E) Türkiye’de ve yurt dışında elde edilen tüm kazanç ve iratlar"}
+{"i": 9, "subject": "Dış Ticaret", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Kalkınma hedeflerine uygunluk"}
+{"i": 10, "subject": "Çağrı Merkezi Hizmetleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) 0,08"}
+{"i": 11, "subject": "İnsan Kaynakları Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Belirlenim kategorisi"}
+{"i": 12, "subject": "Turizm ve Otel İşletmeciliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) II ve IV"}
+{"i": 13, "subject": "Dini Bilgiler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Haricilik"}
+{"i": 14, "subject": "Uluslar Arası İlişkiler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) 13,66"}
+{"i": 15, "subject": "Sağlık Kurumları İşletmeciliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) 13,66"}
+{"i": 16, "subject": "Adalet", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[1.  **Soruyu Anla**: Kullanıcı, Türk Ticaret Kanunu (TTK) kapsamında anonim şirk]"}
+{"i": 17, "subject": "Adalet", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[Bu soru Türk hukukunda adli tatil ile ilgili bir süre hesabı sorusu. \"Tebliğle i]"}
+{"i": 18, "subject": "Dini Bilgiler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Doğru cevap: **A) Ölüm anında**\n\nİslam’a göre, kişi ölümle yüz yüze geldiği anda (can boğaza dayandığında) tövbe etmesi kabul edilmez. Çünkü tövbe, kişinin irade ve seçim özgürlüğüne sahip olduğu, yaşamı boyunca yapabileceği bir eylemdir. Ölüm anında yapılan tövbe, zorunluluk hâlinde olduğu için geçerli sayılmaz."}
+{"i": 19, "subject": "Halkla İlişkiler ve Tanıtım", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) A markalı sütler, 4. raftadır."}
+{"i": 20, "subject": "KPSS", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[We need answer in Turkish likely. Need solve logic. Need parse question. We have]"}
+{"i": 21, "subject": "TUS", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Doğru cevap **D) Nalokson**'dur. \n\n**Açıklama:**\n\n- **Nalokson**, opioid reseptörlerinin **antagonistidir**. Yani opioidlerin (morfin, fentanil vb.) etkilerini bloke eder ve ağrı kesici (analjezik) etkisi **yoktur**. Genellikle opioid doz aşımının tedavisinde kullanılır.\n- **Butorfanol** ve **Pentazosin**, opioid reseptörlerinin kısmi agonist-antagonistleridir ve analjezik (ağrı kesici) etki gösterirler.\n- **Amitriptilin**, trisiklik antidepresandır; özellikle nöropatik (sinir kaynaklı) ağrılarda analjezik olarak kullanılır.\n- **A seçeneği** (\"Varış noktasına ulaşılması ve iş emrine uygun boşaltma gerçekleşmesi\") bir ilaç adı değildir, lojistik bir süreç tanımıdır. Bu nedenle ilaç olarak değerlendirilmez ve soruda verilen ilaçlar arasında analjezik etkisi olmayan tek gerçek ilaç **Nalokson**'dur."}
+{"i": 22, "subject": "Uluslararası Ticaret ve Lojistik Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Varış noktasına ulaşılması ve iş emrine uygun boşaltma gerçekleşmesi"}
+{"i": 23, "subject": "Adalet", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[Bu soru, insan kaynakları yönetiminde yer alan unvanlardan hangisinin olmadığını]"}
+{"i": 24, "subject": "Turizm ve Seyehat Hizmetleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[1.  Kullanıcı Türkçe bir soru soruyor ve şıklar verilmiş. Soru: \"Özel ilgi amacı]"}
+{"i": 25, "subject": "Halkla İlişkiler ve Reklamcılık", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) 14 gün"}
+{"i": 26, "subject": "İktisat", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Doğru cevap **A) Yarı yapılandırılmış – program bütçeleme** olacaktır.\n\n**Gerekçe:**\n\n- **A) Yarı yapılandırılmış – program bütçeleme:** Bu ifade, döviz piyasasıyla hiçbir ilgisi olmayan, **kamu maliyesi ve yönetim** alanına ait bir bütçeleme tekniğidir. Döviz piyasasında işlem yapan bir aktör değildir.\n- **B) Merkez bankaları:** Döviz rezervlerini yönetir, para politikası uygular ve döviz kurunu etkilemek için müdahale ederler. Temel aktörlerdendir.\n- **C) Ticari bankalar:** Döviz alım-satımının en büyük hacmini oluştururlar, müşterileri için işlem yapar ve kendi hesaplarına spekülasyon yaparlar. Temel aktörlerdendir.\n- **D) Banka dışı finansal kurumlar:** Yatırım fonları, hedge fonlar, sigorta şirketleri gibi kurumlar da döviz piyasasında büyük hacimli işlemler yapar. Temel aktörlerdendir.\n- **E) Turistler:** Bireysel düzeyde döviz bozdurarak piyasaya katılırlar, ancak hacimleri çok küçüktür ve \"temel aktör\" olarak kabul edilmezler. Yine de bir aktördürler, ancak A seçeneği tamamen alakasız olduğu için cevap A'dır. (Turistler perakende/bireysel katılımcılar olarak sınıflandırılır, ancak soru \"temel aktörlerden biri değildir\" dediği için A en doğru seçenektir.)"}
+{"i": 27, "subject": "Yönetim Bİlişim Sistemleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[1.  **Analyze the User's Request**:\n    *   The user provides a multiple-choice ]"}
+{"i": 28, "subject": "Özel Koruma ve Güvenlik", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[Bu soru, Türk edebiyatı ve tiyatro tarihiyle ilgili. \"Şair Evlenmesi\" ile \"Karag]"}
+{"i": 29, "subject": "Turizm ve Otel İşletmeciliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[Bu soru Almanca ve Türkçe karışık bir soru. \"Was gehört nicht zu den Verfügungen]"}
+{"i": 30, "subject": "Sağlık Kurumları İşletmeciliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Şebeke diyagramı"}
+{"i": 31, "subject": "Havacılık Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Sabır"}
+{"i": 32, "subject": "Siyer", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Çok övülmüş, medh edilmiş"}
+{"i": 33, "subject": "Uluslar Arası İlişkiler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Viyana Kongresi"}
+{"i": 34, "subject": "Kim 500 Milyar İster", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) 80"}
+{"i": 35, "subject": "AUZEF", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) 30 iş günü"}
+{"i": 36, "subject": "Felsefe", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[Bu soru, Türkiye Cumhuriyeti Anayasası'na göre TBMM'nin görev ve yetkileriyle il]"}
+{"i": 37, "subject": "Özel Koruma ve Güvenlik", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) Devlet Denetleme Kurulu"}
+{"i": 38, "subject": "Sağlık Kurumları İşletmeciliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Eğitim ortamlarının daralması"}
+{"i": 39, "subject": "Marka İletişimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Çelik"}
+{"i": 40, "subject": "Kim 500 Milyar İster", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Çelik"}
+{"i": 41, "subject": "Ev İdaresi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) 19.yy"}
+{"i": 42, "subject": "Halkla İlişkiler ve Tanıtım", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Cevap: **C) Kazak çocukların Rusça okuma-yazma öğrenmesine karşı çıkmıştır.**\n\n**Açıklama:** Abay Kunanbayev, Rusça öğrenmenin Kazak halkı için faydalı olduğunu savunmuş, hatta Kazak çocuklarının Rusça öğrenmesini teşvik etmiştir. Rus"}
+{"i": 43, "subject": "Marka İletişimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Çoklu bölümlendirme"}
+{"i": 44, "subject": "Dış Ticaret", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Din ve bilim çatışma halindedir."}
+{"i": 45, "subject": "Dini Bilgiler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[1.  **Analyze the User's Request**:\n    *   The user provides a Turkish multiple]"}
+{"i": 46, "subject": "Okul Öncesi Öğretmenliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[1.  **Soruyu Anla**:\n    *   Soru, hangi okul öncesi eğitim programının 36-48, 4]"}
+{"i": 47, "subject": "Dini Bilgiler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Beka"}
+{"i": 48, "subject": "Menkul Kıymetler ve Sermaye Piyasası", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) Beveridge Raporu"}
+{"i": 49, "subject": "Medya ve İletişim", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Cevap (A/B/C/D): C"}
+{"i": 50, "subject": "Uluslararası Ticaret ve Lojistik Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Prim"}
+{"i": 51, "subject": "Kamu Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Talep enflasyonu"}
+{"i": 52, "subject": "Aşçılık", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "E) Çekirdek aile"}
+{"i": 53, "subject": "İlahiyat", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[1.  Kullanıcı, Lokman Suresi 28-29. ayetlerinde Allah'ın kudretinin mükemmelliği]"}
+{"i": 54, "subject": "Sosyal Hizmet", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "E) Kayısı suyu\n\nİshalli çocuklarda özellikle yüksek şekerli meyve suları, kayısı gibi bağırsak hareketlerini artıran besinler uygun değildir. Kayısı suyu ishali artırabilir."}
+{"i": 55, "subject": "Tarım", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "E) Hünkar İskelesi"}
+{"i": 56, "subject": "Elektrik Enerjisi Üretim,İletim ve Dağıtımı", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Partheon Tapınağı"}
+{"i": 57, "subject": "Okul Öncesi Öğretmenliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Hayvan yürüyüşlerini taklit etme"}
+{"i": 58, "subject": "DHBT", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Politik yönelim"}
+{"i": 59, "subject": "Turizm ve Seyehat Hizmetleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "E) Politik yönelim"}
+{"i": 60, "subject": "Laborant ve Veteriner Sağlık", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Medya"}
+{"i": 61, "subject": "Yaşlı Bakımı", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) İsmail Hakkı Baltacıoğlu"}
+{"i": 62, "subject": "Üniversite Giriş Sınavı Temel Bilimler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Cevap: **B) Kültürel çatışmalar toplumsal sapmaya neden olabilir.**\n\nSoruda, sanayileşmiş toplumlarda değer ve normlardaki değişimlerin bireyleri eski ve yeni normlar arasında seçim yapmaya zorladığı ve bu durumun toplum dışı davranışlara (sapmaya) yol açabileceği belirtiliyor. Bu, farklı değer ve normların çatışması sonucu bireylerin hangi norma uyacağı konusunda kararsız kalması ve sapma davranışı göstermesi durumudur. Bu da **kültürel çatışmaların toplumsal sapmaya neden olabileceğini** ifade eder."}
+{"i": 63, "subject": "Menkul Kıymetler ve Sermaye Piyasası", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Kâtib Çelebi"}
+{"i": 64, "subject": "Tıbbi Dökümantasyon ve Sekreterlik", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Yılmaz Vural"}
+{"i": 65, "subject": "Futbol", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Cevap: C) Yılmaz Vural"}
+{"i": 66, "subject": "Özel Koruma ve Güvenlik", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Hendek tavalar kullanılmalı"}
+{"i": 67, "subject": "Büro Yönetimi ve Yönetici Asistanlığı", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) Sendika hizmetleri fiyatı"}
+{"i": 68, "subject": "Aşçılık", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Taklit etme"}
+{"i": 69, "subject": "Çalışma Ekonomisi ve Endüstri İlişkileri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Birleşik cümleler kullanır."}
+{"i": 70, "subject": "Havacılık Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Birleşik cümleler kullanır."}
+{"i": 71, "subject": "Kültürel Miras ve Turizm", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Doğru cevap **D) Finansal-Müşteri-Dâhilî İş Süreçleri-Öğrenme ve Gelişim**'dir.\n\n**Açıklama:**  \nKaplan ve Norton tarafından geliştirilen **Kurumsal Karne (Balanced Scorecard)** modeli, işletmelerin stratejik hedeflerini dört temel boyutta ele alır:\n\n1. **Finansal Boyut:** Kârlılık, gelir artışı, maliyet yönetimi gibi finansal performans göstergeleri.\n2. **Müşteri Boyutu:** Müşteri memnuniyeti, pazar payı, müşteri sadakati gibi göstergeler.\n3. **Dâhilî İş Süreçleri Boyutu:** Operasyonel verimlilik, kalite, süreç iyileştirme gibi iç süreçler.\n4. **Öğrenme ve Gelişim Boyutu:** Çalışan yetkinlikleri, bilgi yönetimi, inovasyon ve kurumsal kültür.\n\nDiğer seçeneklerdeki \"Zaman\", \"Mekan\", \"Satış\", \"İrtidad\" gibi kavramlar bu modelin standart boyutları arasında yer almaz. Bu nedenle doğru seçenek **D**'dir."}
+{"i": 72, "subject": "DHBT", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) İrtidad"}
+{"i": 73, "subject": "KPSS", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Medeni Kanun’un kabul edilmesi"}
+{"i": 74, "subject": "Dış Ticaret", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Özet Beyan"}
+{"i": 75, "subject": "Okul Öncesi Öğretmenliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Çarpışan arabalar"}
+{"i": 76, "subject": "Kim 500 Milyar İster", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[We need answer Turkish. Question: \"Direkle elektriğe bağlı oyuncakları sürerek o]"}
+{"i": 77, "subject": "Sosyal Hizmet", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "[We need answer Turkish question. Need determine which is criterion used in evalu]"}
+{"i": 78, "subject": "Yerel Yönetimler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) Taşınabilirlik"}
+{"i": 79, "subject": "Menkul Kıymetler ve Sermaye Piyasası", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) Piyasa genişliği"}
+{"i": 80, "subject": "Felsefe", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Soyutlama"}
+{"i": 81, "subject": "Muhasebe ve Vergi Uygulamaları", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Sıfır hipotezini belirtme"}
+{"i": 82, "subject": "Menkul Kıymetler ve Sermaye Piyasası", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Yerel saatle kalkış ve yerel saatle varışı"}
+{"i": 83, "subject": "Halkla İlişkiler ve Tanıtım", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Yerel saatle kalkış ve yerel saatle varışı"}
+{"i": 84, "subject": "Çalışma Ekonomisi ve Endüstri İlişkileri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C"}
+{"i": 85, "subject": "Kamu Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Sıkı para politikaları"}
+{"i": 86, "subject": "Özel Koruma ve Güvenlik", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Birincil gelir dağılımı"}
+{"i": 87, "subject": "Çağrı Merkezi Hizmetleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Domuzlar Körfezi Çıkartması"}
+{"i": 88, "subject": "Yönetim Bİlişim Sistemleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "Cevap: E) reboot"}
+{"i": 89, "subject": "Büro Yönetimi ve Yönetici Asistanlığı", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) 1961 Anayasası"}
+{"i": 90, "subject": "Uluslararası Ticaret ve Lojistik Yönetimi", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Yolcu taşımacılığı lojistik faaliyet değildir."}
+{"i": 91, "subject": "Yerel Yönetimler", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) 2002"}
+{"i": 92, "subject": "Fotoğrafçılık ve Kameramanlık", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "C) Baskı tekniği"}
+{"i": 93, "subject": "Tarım", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Avusturya-Macaristan"}
+{"i": 94, "subject": "İlahiyat", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "A) Avusturya-Macaristan"}
+{"i": 95, "subject": "KPSS Denemeleri", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) II ve IV"}
+{"i": 96, "subject": "Felsefe", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "E) Esas itibariyle, bir mekanizmadan ziyade bir organik oluşum olması"}
+{"i": 97, "subject": "Sosyal Hizmet", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Friedman testi"}
+{"i": 98, "subject": "Okul Öncesi Öğretmenliği", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "B) Sevecen ve empatik olma"}
+{"i": 99, "subject": "Kim 500 Milyar İster", "type": "choice_sub", "model": "deepseek/deepseek-v4-flash-0731", "raw": "D) 99"}

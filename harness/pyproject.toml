@@ -1,0 +1,9 @@
+[project]
+name = "harness"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "datasets[cli]>=5.0.1",
+    "openai>=3.0.0",
+    "pyarrow>=25.0.1",
+]
