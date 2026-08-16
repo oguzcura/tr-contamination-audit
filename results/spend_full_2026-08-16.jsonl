@@ -2,3 +2,6 @@
 {"ts": "2026-08-16T22:35:55", "calls_logged": 1500, "accumulated_cost_est_usd": 0.023683, "cost_cap_usd": 2.0, "abort": false}
 {"ts": "2026-08-16T22:48:25", "calls_logged": 2000, "accumulated_cost_est_usd": 0.023683, "cost_cap_usd": 2.0, "abort": false}
 {"ts": "2026-08-16T23:01:28", "calls_logged": 2500, "accumulated_cost_est_usd": 0.029801, "cost_cap_usd": 2.0, "abort": false}
+{"ts": "2026-08-16T23:26:16", "calls_logged": 3000, "accumulated_cost_est_usd": 0.062331, "cost_cap_usd": 2.0, "abort": false}
+{"ts": "2026-08-16T23:40:16", "calls_logged": 3500, "accumulated_cost_est_usd": 0.095783, "cost_cap_usd": 2.0, "abort": false}
+{"ts": "2026-08-16T23:45:36", "calls_logged": 4000, "accumulated_cost_est_usd": 0.124815, "cost_cap_usd": 2.0, "abort": false}
