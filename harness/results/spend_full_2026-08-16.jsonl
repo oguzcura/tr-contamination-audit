@@ -1,0 +1,4 @@
+{"ts": "2026-08-16T22:10:30", "calls_logged": 1000, "accumulated_cost_est_usd": 0.000966, "cost_cap_usd": 2.0, "abort": false}
+{"ts": "2026-08-16T22:35:55", "calls_logged": 1500, "accumulated_cost_est_usd": 0.023683, "cost_cap_usd": 2.0, "abort": false}
+{"ts": "2026-08-16T22:48:25", "calls_logged": 2000, "accumulated_cost_est_usd": 0.023683, "cost_cap_usd": 2.0, "abort": false}
+{"ts": "2026-08-16T23:01:28", "calls_logged": 2500, "accumulated_cost_est_usd": 0.029801, "cost_cap_usd": 2.0, "abort": false}

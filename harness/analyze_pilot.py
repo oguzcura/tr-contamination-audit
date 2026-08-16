@@ -1,8 +1,8 @@
 """Analyze pilot.jsonl against TR-MMLU ground truth (seed=42 sample)."""
-import json, os, random, re
+import json, random, re
 from datasets import load_dataset
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results", "pilot.jsonl")
+OUT = r"C:\Users\oguzc\ai-team\research\harness\results\pilot.jsonl"
 N = 100
 
 # Reload same sample the harness used (seed 42, limit 100)
