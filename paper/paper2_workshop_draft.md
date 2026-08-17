@@ -211,17 +211,23 @@ The total audit cost of $0.71 demonstrates that rigorous contamination auditing 
 
 ### 5.4 Limitations
 
-1. **Black-box API.** Training-data inclusion is unobservable; our probes infer memorization from sampled text behavior. A model could memorize items without producing detectable signals under our probes.
+1. **Black-box API.** Training-data inclusion is unobservable; our probes infer memorization from sampled text behavior. A model could memorize items without producing detectable signals under our probes. Weight-based methods (membership inference against logits) would provide stronger evidence but require model access we do not have.
 
-2. **M1 confound.** Handled by the M1-DISCOUNT reading, but the RAW reading is still reported for transparency. Future work should develop M1 variants that control for instruction-following.
+2. **M1 confound.** The M1 verbatim-recall probe is confounded by instruction-following: asking a model to "reproduce" text elicits high overlap even without memorization (luna 86–88% on MCQ benchmarks). We handle this via the pre-registered M1-DISCOUNT reading, but the RAW reading is still reported for transparency. Future work should develop M1 variants that control for instruction-following (e.g., indirect recall prompts).
 
-3. **QA semantic matching.** The RAGTurk matcher is precision-first (1.000 precision, 0.371 recall on 106 labeled pairs). Every RAGTurk accuracy is a lower bound. A lenient sensitivity variant is reported but not used as headline.
+3. **QA semantic matching.** The RAGTurk matcher is precision-first (1.000 precision, 0.371 recall on 106 labeled pairs). This means every RAGTurk accuracy is a conservative lower bound — true contamination could be higher than detected. A lenient sensitivity variant is reported per arm but not used as headline. The matcher's low recall is a disclosed limitation, not a flaw: false positives would corrupt the fragility contrast.
 
-4. **Sample size.** n=200 per benchmark × model is a sample, not the full benchmark. Results generalize to the seed-42 matched subsets.
+4. **Sample size.** n=200 per benchmark × model is a sample, not the full benchmark. Results generalize to the seed-42 matched subsets. Larger samples would narrow confidence intervals and potentially resolve cells where Bonferroni correction pushes borderline p-values above threshold (e.g., RAGTurk deepseek B-vs-A p=0.022 before correction).
 
-5. **Translation noise.** RAGTurk Arm C golds are machine-translated (single pass, deepseek-v4-flash). Translation error propagates into C scoring.
+5. **Translation noise.** RAGTurk Arm C golds are machine-translated (single pass, deepseek-v4-flash). Translation error propagates into C scoring, potentially deflating C accuracy and creating artificial fragility signals. Human-translated golds would eliminate this confound.
 
-6. **Run interruptions.** The run was interrupted and resumed three times. All resume logic is logged; no data was lost or duplicated.
+6. **Model selection.** We test three models (gpt-5.6-luna, mimo-v2.5, deepseek-v4-flash). Other models deployed to Turkish users (e.g., GPT-4o, Claude, Gemini) may show different contamination profiles. Our findings are scope-limited to these three models.
+
+7. **Benchmark selection.** We audit four benchmarks. Other Turkish evaluation datasets (e.g., Cetvel [30], Turkish SuperGLUE) may have different contamination profiles. The "no contamination detected" finding applies only to these four benchmarks under these probes.
+
+8. **No corpus-overlap probe (M3).** The pre-registration described an M3 corpus-overlap modality using n-gram matching against training corpora. This was not executed in the current run due to cost and access constraints (requires corpus access or large-scale n-gram indexing). M3 would provide independent corroboration of M1/M2 signals.
+
+9. **Run interruptions.** The run was interrupted and resumed three times due to process crashes. All resume logic is logged; no data was lost or duplicated. The run_start/run_end markers in the JSONL document the interruption history.
 
 ---
 
