@@ -8,7 +8,8 @@
 \usepackage{inconsolata}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{float}
+\usepackage{tabularx}
+\usepackage{adjustbox}
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{url}
@@ -54,7 +55,7 @@ Our audit covers four Turkish benchmarks $\times$ three frontier models $\times$
 
 The contamination detection literature has evolved from simple n-gram overlap \cite{brown2020gpt3} to sophisticated membership-inference attacks \cite{geng2022detecting}, perplexity-based methods \cite{oren2023proving}, and temporal-signal analysis \cite{zhang2025test}. Carlini et al. \cite{carlini2021extracting} demonstrate that training-data extraction is feasible for large language models, establishing the threat model that contamination audits operationalize. Yang et al. \cite{yang2024data} provide a comprehensive taxonomy of data contamination types, distinguishing between verbatim memorization, paraphrase contamination, and structural leakage --- a taxonomy our three-probe design directly maps onto.
 
-Recent work has moved toward multi-signal approaches. The Contamination Multiplier framework \cite{contammulti2024} combines multiple detection signals with calibrated thresholds. ConStat \cite{constat2024} operationalizes contamination as ``non-generalizing performance'' --- performance that degrades under concept-preserving perturbation --- providing the theoretical foundation for our M2b cross-lingual fragility probe. The Fragile Reasoning work \cite{fragile2025reasoning} demonstrates that reasoning abilities can be fragile under surface perturbations, motivating our distractor-flip modality. S\'{a}nchez Salido et al. \cite{sanchz2025mcq} introduced MCQ variation that separates memorization from reasoning, finding significant accuracy drops when memorized tokens are disrupted --- our M2a probe extends this principle to Turkish MCQ benchmarks using distractor-flip editing.
+Recent work has moved toward multi-signal approaches. The Contamination Multiplier framework \cite{contammulti2024} combines multiple detection signals with calibrated thresholds. ConStat \cite{constat2024} operationalizes contamination as ``non-generalizing performance'' --- performance that degrades under concept-preserving perturbation --- providing the theoretical foundation for our M2b cross-lingual fragility probe. The Fragile Reasoning work \cite{fragilereasoning2025} demonstrates that reasoning abilities can be fragile under surface perturbations, motivating our distractor-flip modality. S\'{a}nchez Salido et al. \cite{sanchz2025mcq} introduced MCQ variation that separates memorization from reasoning, finding significant accuracy drops when memorized tokens are disrupted --- our M2a probe extends this principle to Turkish MCQ benchmarks using distractor-flip editing.
 
 \subsection{Non-English benchmark auditing}
 
@@ -74,9 +75,9 @@ The ``Contamination Signals, Not Verdicts'' framing follows a growing recognitio
 
 We audit four Turkish LLM evaluation benchmarks (Table~\ref{tab:benchmarks}):
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{lllll}
 \toprule
 \textbf{Benchmark} & \textbf{Source} & \textbf{Format} & \textbf{Items (sampled)} & \textbf{Public since} \\
@@ -87,10 +88,10 @@ Halluverse-M3-tr & Dal\u{g}ar et al. \cite{halluverse2026} & QA + dialogue summa
 RAGTurk formal\_5k & METU NLP \cite{ragturk2026} & QA + passage chunks & 200 & 2026-02-03 \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{Turkish LLM evaluation benchmarks audited in this study. All items are seed-42 matched across probes to ensure paired comparisons.}
 \label{tab:benchmarks}
-\end{table}
+\end{table*}
 
 TR-MMLU and TUMLU-tr are multiple-choice; Halluverse-M3-tr and RAGTurk are free-form QA.
 
@@ -98,9 +99,9 @@ TR-MMLU and TUMLU-tr are multiple-choice; Halluverse-M3-tr and RAGTurk are free-
 
 Three frontier models tested via the opencode-go API (black-box, no weight access):
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{llll}
 \toprule
 \textbf{Model} & \textbf{Provider} & \textbf{Cost (rated)} & \textbf{Notes} \\
@@ -110,10 +111,10 @@ mimo-v2.5 & Xiaomi & \$0.000 (uncosted) & Subject model \\
 deepseek-v4-flash & DeepSeek & \$0.358 & Reference cohort \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{Models tested in the contamination audit.}
 \label{tab:models}
-\end{table}
+\end{table*}
 
 DeepSeek serves as the reference model --- a publicly documented, widely-used model that provides baseline contamination signals for comparison.
 
@@ -166,9 +167,9 @@ The full audit completed with 13,193 logged API calls (planned 13,200; differenc
 
 \subsubsection{TR-MMLU}
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{lccccc}
 \toprule
 \textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
@@ -178,10 +179,10 @@ mimo-v2.5 & 0.575 [0.506, 0.641] & 0.140 [0.099, 0.195] & 0.150 & 1.000 \\
 deepseek-v4-flash & 0.780 [0.718, 0.832] & 0.145 [0.103, 0.201] & 0.004 & 0.239 \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{TR-MMLU probe results.}
 \label{tab:trmmu}
-\end{table}
+\end{table*}
 
 M1 verbatim rates are high for instruction-following models (expected --- M1 is confounded). M2a flip rates are low (9--16\%) across all models. M2b B-vs-A is significant for GPT-5.6-luna and deepseek, but C-vs-A is not significant for any model --- the pattern is back-translation noise, not surface-anchored memorization (C would need to be stable while B collapses for the contamination signature).
 
@@ -189,9 +190,9 @@ M1 verbatim rates are high for instruction-following models (expected --- M1 is 
 
 \subsubsection{TUMLU-tr}
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{lccccc}
 \toprule
 \textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
@@ -201,10 +202,10 @@ mimo-v2.5 & 0.365 [0.301, 0.434] & 0.111 [0.074, 0.162] & $<$0.001 & 1.000 \\
 deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & $<$0.001 & 0.831 \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{TUMLU-tr probe results.}
 \label{tab:tumlu}
-\end{table}
+\end{table*}
 
 TUMLU-tr shows the strongest M2b B-vs-A signals across all models --- all significant after Bonferroni. However, for GPT-5.6-luna and deepseek, C-vs-A is also significant or near-significant, suggesting general translation quality degradation rather than surface-specific fragility. For mimo-v2.5, C-vs-A is perfectly stable ($p=1.000$), but only 1/3 modalities indicates (M2b alone), which does not meet the $\geq$2/3 threshold.
 
@@ -214,9 +215,9 @@ The critical cell: \textbf{deepseek-v4-flash $\times$ TUMLU-tr} reaches signific
 
 \subsubsection{Halluverse-M3-tr}
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b Arm A accuracy} \\
@@ -226,10 +227,10 @@ mimo-v2.5 & 0.000 [0.000, 0.019] & 0.085 [0.054, 0.132] & 0.045 \\
 deepseek-v4-flash & 0.000 [0.000, 0.019] & 0.110 [0.074, 0.161] & 0.055 \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{Halluverse-M3-tr probe results.}
 \label{tab:halluverse}
-\end{table}
+\end{table*}
 
 Halluverse shows \textbf{zero verbatim recall} across all models --- a clean negative signal for M1. M2a flip rates are low (9--11\%). M2b free-form QA baseline is low (2.5--5.5\% for Arm A), limiting the fragility contrast. The M2a McNemar discordance is dominated by the structure effect (moving from free-form to 2-option format rescues items), not flip-following.
 
@@ -237,9 +238,9 @@ Halluverse shows \textbf{zero verbatim recall} across all models --- a clean neg
 
 \subsubsection{RAGTurk formal\_5k}
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2b Arm A accuracy} & \textbf{M2b Arm C accuracy} \\
@@ -249,10 +250,10 @@ mimo-v2.5 & 0.030 [0.014, 0.064] & 0.025 & 0.000 \\
 deepseek-v4-flash & 0.070 [0.042, 0.114] & 0.070 & 0.000 \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{RAGTurk formal\_5k probe results.}
 \label{tab:ragturk}
-\end{table}
+\end{table*}
 
 RAGTurk accuracies are lower bounds under the precision-first matcher (measured recall 0.371 on 106 labeled pairs). Arm C is scored against machine-translated golds --- an extra noise source. The zero accuracy for Arm C across all models reflects the combined difficulty of English-translated QA scoring, not necessarily model failure.
 
@@ -260,9 +261,9 @@ RAGTurk accuracies are lower bounds under the precision-first matcher (measured 
 
 \subsection{Adjudication summary}
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{llcc}
 \toprule
 \textbf{Benchmark} & \textbf{Model} & \textbf{RAW} & \textbf{M1-DISCOUNT} \\
@@ -281,10 +282,10 @@ RAGTurk formal\_5k & mimo-v2.5 & --- & --- \\
 RAGTurk formal\_5k & deepseek-v4-flash & --- & --- \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{Adjudication summary. Under the M1-DISCOUNT rule, zero cells are flagged as contaminated. One cell (TUMLU-tr $\times$ deepseek-v4-flash) is classified as THRESHOLD-DEPENDENT.}
 \label{tab:adjudication}
-\end{table}
+\end{table*}
 
 \textbf{Headline: 0/12 cells flagged under the pre-registered M1-DISCOUNT rule. 1/12 cells flagged under RAW but reclassified as THRESHOLD-DEPENDENT.}
 
@@ -351,9 +352,9 @@ The RAGTurk QA matcher uses a precision-first cascade: empty guard $\rightarrow$
 
 \subsection*{Appendix C: Spend log summary}
 
-\begin{table}[H]
+\begin{table*}[t]
 \centering
-\resizebox{\textwidth}{!}{%
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{lccccc}
 \toprule
 \textbf{Model} & \textbf{Calls} & \textbf{OK} & \textbf{Fail} & \textbf{Retries} & \textbf{Cost} \\
@@ -365,10 +366,10 @@ DeepSeek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
 \textbf{TOTAL} & \textbf{13,193} & \textbf{13,154} & \textbf{39} & \textbf{255} & \textbf{\$0.707} \\
 \bottomrule
 \end{tabular}%
-}
+\end{adjustbox}
 \caption{Spend log summary for the full audit.}
 \label{tab:spend}
-\end{table}
+\end{table*}
 
 26 spend checkpoints logged; no cost cap breach. Total project spend including preparatory smoke/pilot runs: \$0.89 (gpt-5.6-luna \$0.43, deepseek-v4-flash \$0.45, mimo-v2.5 uncosted).
 
