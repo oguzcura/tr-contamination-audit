@@ -1,0 +1,6 @@
+=== FULL n=200 AUDIT (Day 8, 2026-08-16) — FINAL DIGEST ===
+status: COMPLETED (resumed/interrupted run)
+calls logged: 13193 | ok 13154 | fail 39 | retries 255 | rated cost ~$0.7066
+spend checkpoints: 26 | TOTAL_cost_est (rated) $0.706603
+cells + dual consensus: C:\Users\oguzc\ai-team\research\harness\results\full_stats_2026-08-16.json
+report: C:\Users\oguzc\ai-team\research\notes\full_results_2026-08-16.md
