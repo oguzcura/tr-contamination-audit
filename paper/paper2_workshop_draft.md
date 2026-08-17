@@ -36,11 +36,11 @@ Our audit covers four Turkish benchmarks × three frontier models × three probe
 
 The contamination detection literature has evolved from simple n-gram overlap [15] to sophisticated membership-inference attacks [4], perplexity-based methods [16], and temporal-signal analysis [17]. Carlini et al. [18] demonstrate that training-data extraction is feasible for large language models, establishing the threat model that contamination audits operationalize. Yang et al. [1] provide a comprehensive taxonomy of data contamination types, distinguishing between verbatim memorization, paraphrase contamination, and structural leakage — a taxonomy our three-probe design directly maps onto.
 
-Recent work has moved toward multi-signal approaches. The Contamination Multiplier framework [19] combines multiple detection signals with calibrated thresholds. ConStat [3] operationalizes contamination as "non-generalizing performance" — performance that degrades under concept-preserving perturbation — providing the theoretical foundation for our M2b cross-lingual fragility probe. The Fragile Reasoning work [20] demonstrates that reasoning abilities can be fragile under surface perturbations, motivating our distractor-flip modality.
+Recent work has moved toward multi-signal approaches. The Contamination Multiplier framework [19] combines multiple detection signals with calibrated thresholds. ConStat [3] operationalizes contamination as "non-generalizing performance" — performance that degrades under concept-preserving perturbation — providing the theoretical foundation for our M2b cross-lingual fragility probe. The Fragile Reasoning work [20] demonstrates that reasoning abilities can be fragile under surface perturbations, motivating our distractor-flip modality. Sánchez Salido et al. [28] introduced MCQ variation that separates memorization from reasoning, finding significant accuracy drops when memorized tokens are disrupted — our M2a probe extends this principle to Turkish MCQ benchmarks using distractor-flip editing.
 
 ### 2.2 Non-English benchmark auditing
 
-The Bangla MathShikkha audit [10] establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks [21] surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly [22] audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU [7] introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit [11] documented structural weaknesses but not training-data leakage. TurkEmbed [23] and related work build Turkish-specific NLP infrastructure without addressing contamination concerns.
+The Bangla MathShikkha audit [10] establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks [21] surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly [22] audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU [7] introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit [11] documented structural weaknesses but not training-data leakage. Yıldız et al. [30] evaluated quality across 17 Turkish benchmarks, finding structural and cultural issues that compound contamination risk. TurkEmbed [23] and related work build Turkish-specific NLP infrastructure without addressing contamination concerns. In cross-lingual contamination, Abbas et al. [29] showed that translation suppresses conventional contamination indicators in Arabic corpora — our M2b probe's 3-arm design (TR original → back-translation → EN direct) extends this insight to Turkish.
 
 ### 2.3 Pre-registration and evaluation methodology
 
@@ -288,6 +288,12 @@ The methodological contribution — the RAW + M1-DISCOUNT dual-reporting convent
 [26] GAOKAO-Eval. "How Do Large Language Models Fail Chinese Exam Questions? A Benchmark for Chinese Evaluation." 2024.
 
 [27] Florence-2. "Flores-2026: A Multilingual Benchmark for LLM Evaluation." arXiv:2601.20858, 2026.
+
+[28] Sánchez Salido et al. "None of the Others: a General Technique to Distinguish Reasoning from Memorization in Multiple-Choice LLM Evaluation Benchmarks." arXiv:2502.12896, 2025.
+
+[29] Abbas et al. "Obscuring Data Contamination Through Translation: Evidence from Arabic Corpora." arXiv:2601.14994, 2026.
+
+[30] Yıldız et al. "Evaluating Benchmark Quality for Low-Resource Languages: A Turkish Case Study." arXiv:2504.09714, 2025.
 
 ---
 
