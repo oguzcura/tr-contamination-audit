@@ -2,26 +2,37 @@
 
 Multi-benchmark contamination audit of Turkish LLM benchmarks (TR-MMLU, TUMLU-tr, RAGTurk, Halluverse-M3) using three independent probe modalities (M1 verbatim recall, M2 option-perturbation/surface-fragility, M3 corpus-overlap) against black-box API models (gpt-5.6-luna, mimo-v2.5, deepseek-v4-flash via the opencode-go transport).
 
-This is the artifact repository for the multi-benchmark Turkish contamination audit (the sibling of [oguzcura/trmlu-audit](https://github.com/oguzcura/trmlu-audit), which covers the TR-MMLU paper only). It holds the frozen pre-registration (hypotheses, decision rules), the probe harness, the verified dataset snapshots, and real smoke results.
+This is the artifact repository for the multi-benchmark Turkish contamination audit (the sibling of [oguzcura/trmlu-audit](https://github.com/oguzcura/trmlu-audit), which covers the TR-MMLU paper only). It holds the frozen pre-registration (hypotheses, decision rules), the probe harness, the verified dataset snapshots, and full n=200 results.
 
-**Status: pilot phase, full results pending.** The files in this repository are real and reproducible; the full M1/M2/M3 run across all benchmarks × models has not completed yet and no benchmark-containment claims are made from the pilot data. See [pre-registration.md](pre-registration.md) for the frozen H0/H1 and the consensus decision rule that will be applied to the full run.
+**Status: FULL RUN COMPLETE (2026-08-17).** 13,193 API calls, 0/12 cells flagged under M1-DISCOUNT. See `paper/paper2_workshop_draft.md` for the workshop paper and `notes/full_results_2026-08-16.md` for the full report.
 
 ## Repository structure
 
 | Path | Contents |
 |------|----------|
-| `pre-registration.md` | Frozen design doc: H0/H1, probe definitions M1/M2/M3, sampling & matched-subset statistics, decision rule, two-week plan (frozen 2026-08-16) |
+| `pre-registration.md` | Frozen design doc: H0/H1, probe definitions M1/M2/M3, sampling & matched-subset statistics, decision rule (frozen 2026-08-16) |
 | `harness/` | Probe harness: dataset builder, M1 probe, cross-lingual 3-arm probe, analyzers |
-| `harness/src/trmlu_audit/core.py` | opencode-go transport (`chat_record`: retry-on-empty, content+reasoning parsing, usage capture) — reused from trmlu-audit |
 | `data/` | Verified dataset snapshots (CSV) + `manifest.json`; see `data/README.md` |
-| `results/` | Real run output; currently `smoke_2026-08-16.jsonl` (70 M1/BB smoke records, deepseek-v4-flash) |
-| `paper/` | LaTeX source + PDF for the paper (lands when the full run completes) |
+| `harness/results/` | Full n=200 audit trail: `full_audit_2026-08-16.jsonl` (13,198 lines), `full_stats_2026-08-16.json`, spend logs, digest |
+| `notes/` | Results report, pilot results, pre-registration, verification pass |
+| `paper/` | Workshop draft (`paper2_workshop_draft.md`), skeleton, README |
+
+## Key results
+
+| Benchmark | gpt-5.6-luna | mimo-v2.5 | deepseek-v4-flash |
+|---|---|---|---|
+| TR-MMLU | ✅ No contamination | ✅ No contamination | ✅ No contamination |
+| TUMLU-tr | ✅ No contamination | ✅ No contamination | ⚠️ THRESHOLD-DEPENDENT |
+| Halluverse-M3-tr | ✅ No contamination | ✅ No contamination | ✅ No contamination |
+| RAGTurk formal_5k | ✅ No contamination | ✅ No contamination | ✅ No contamination |
+
+0/12 cells flagged under the pre-registered M1-DISCOUNT rule. One RAW-only flag (TUMLU-tr × deepseek-v4-flash) is THRESHOLD-DEPENDENT (M1-sensitive), never "contaminated."
 
 ## Probes (per pre-registration §3)
 
 - **M1 — Verbatim-recall / recognition:** shuffled-option verbatim reproduction; 8-gram overlap signature. (`harness/probe_m1.py`)
 - **M2 — Option-perturbation / surface-fragility:** M2a flipped distractor, M2b cross-lingual back-translation arms A/B/C. (`harness/crosslingual_probe.py`)
-- **M3 — Overlap statistics:** contiguous 13-gram exact-match against public Turkish corpora (CulturaX-tr, Wikipedia-tr); descriptive baseline only.
+- **M3 — Overlap statistics:** contiguous 13-gram exact-match against public Turkish corpora (CulturaX-tr, Wikipedia-tr); descriptive baseline only. *(Not executed in full run — see limitations.)*
 
 ## Reproduction
 
@@ -38,22 +49,40 @@ uv run python harness/datasets_v2.py
 # 2. M1 verbatim-recall smoke (matches results/smoke_2026-08-16.jsonl)
 uv run python harness/probe_m1.py --model deepseek-v4-flash --limit 20 --phase m1_smoke --log results/smoke_2026-08-16.jsonl
 
-# 3. Black-box letter baseline smoke (transport check)
-uv run python harness/probe_m1.py --model deepseek-v4-flash --limit 20 --bb --log results/smoke_2026-08-16.jsonl
-
-# 4. Cross-lingual 3-arm run (A baseline / B back-translation / C English-direct)
+# 3. Cross-lingual 3-arm run (A baseline / B back-translation / C English-direct)
 uv run python harness/crosslingual_probe.py --limit 200 --arms A B C --out results/scale3arm.jsonl
 
-# 5. Analyzers: accuracy, Wilson CI, McNemar exact
+# 4. Full n=200 audit (4 benchmarks × 3 models × probes M1/M2a/M2b)
+uv run python harness/full_audit.py --limit 200 --max-cost 2.00 --log results/full_audit_2026-08-16.jsonl
+
+# 5. Analyzers
 uv run python harness/analyze_scale3arm.py
 uv run python harness/analyze_pilot.py
+uv run python harness/analyze_full_audit.py
 ```
+
+## Spend
+
+| Run | gpt-5.6-luna | deepseek-v4-flash | mimo-v2.5 | Total |
+|---|---|---|---|---|
+| Smoke | $0.001 | $0.002 | $0.000 | $0.003 |
+| Pilot (n=50) | $0.085 | $0.091 | $0.000 | $0.176 |
+| Full (n=200) | $0.348 | $0.358 | $0.000 | $0.707 |
+| **TOTAL** | **$0.434** | **$0.452** | **$0.000** | **$0.886** |
+
+mimo-v2.5 is uncosted (no published rate on opencode-go). 26 spend checkpoints logged; no cost cap breach.
 
 ## Known honest limitations
 
-- `harness/crosslingual_probe.py` still uses the legacy OpenRouter transport (`OPENROUTER_API_KEY`); the account has verified OpenRouter restrictions (404 for all providers), so the port to `trmlu_audit.core` (opencode-go) is pending. The analyzer and probe files are real and were exercised during development, but only the M1/BB path has produced committed results so far.
-- `data/ragturk_informal6k.csv` is header-only: the Hugging Face informal_6k split contains no data files (verified live 2026-08-16, see `data/README.md` and `manifest.json`).
-- Black-box probes cannot prove training inclusion; M3 overlap is descriptive only. No benchmark is called "contaminated" or "clean" on any single probe (overclaim guards in pre-registration §6).
+- **Black-box API:** training-data inclusion is unobservable; probes infer memorization from sampled text behavior. Weight-based methods would require model access.
+- **M1 confound:** verbatim-recall probe is confounded by instruction-following; handled by pre-registered M1-DISCOUNT reading (RAW shown for transparency).
+- **QA matcher:** RAGTurk matcher is precision-first (1.000 precision, 0.371 recall on 106 labeled pairs); every RAGTurk accuracy is a conservative lower bound.
+- **Sample size:** n=200 per benchmark × model is a sample, not the full benchmark.
+- **Translation noise:** RAGTurk Arm C golds are machine-translated; translation error propagates into C scoring.
+- **Model scope:** only 3 models tested; other models deployed to Turkish users may differ.
+- **Benchmark scope:** only 4 benchmarks audited; other Turkish datasets may have different profiles.
+- **No M3:** corpus-overlap probe was pre-registered but not executed (cost/access constraints).
+- **Run interruptions:** 3 crashes during full run; all resume logic logged, no data lost.
 
 ## License
 
