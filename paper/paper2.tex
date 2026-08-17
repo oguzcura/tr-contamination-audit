@@ -8,7 +8,10 @@
 \usepackage{inconsolata}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{url}
 
 \title{Contamination Signals, Not Verdicts: A Pre-Registered Multi-Probe Audit of Turkish LLM Benchmarks with a Threshold-Sensitivity Protocol}
 
@@ -19,6 +22,8 @@
   \texttt{github.com/oguzcura}
 }
 
+\date{}
+
 \begin{document}
 \maketitle
 
@@ -28,17 +33,17 @@ Benchmark contamination --- the leakage of evaluation items into training data -
 
 \section{Introduction}
 
-The trustworthiness of LLM leaderboards depends on a simple assumption: benchmark items remain unseen by the models being evaluated. When this assumption is violated --- through training-data contamination --- reported performance reflects memorization rather than capability, undermining model selection and scientific inference \cite{yang2024survey, liang2024evaluating, constat2024}.
+The trustworthiness of LLM leaderboards depends on a simple assumption: benchmark items remain unseen by the models being evaluated. When this assumption is violated --- through training-data contamination --- reported performance reflects memorization rather than capability, undermining model selection and scientific inference \cite{yang2024data,liang2024mitigating,constat2024}.
 
-Contamination detection has become a major research thrust for English benchmarks. Geng et al.~\cite{geng2022detecting} propose membership-inference-based detection; Mattern et al.~\cite{mattern2023quantifying} study data contamination in code LLMs; Liang et al.~\cite{liang2024evaluation} survey the landscape of evaluation methodology threats. Yet the non-English evaluation ecosystem is growing faster than the auditing infrastructure that could validate it: new benchmarks for Turkish \cite{simsek2025trmmlu, barov2025tumlu}, Hindi \cite{aggarwal2024indic}, Bangla \cite{ahmed2024mathshikkha}, and dozens of other languages appear on HuggingFace and arXiv without corresponding contamination audits.
+Contamination detection has become a major research thrust for English benchmarks. Geng et al. \cite{geng2022detecting} propose membership-inference-based detection; Mattern et al. \cite{mattern2023code} study data contamination in code LLMs; Liang et al. \cite{liang2024survey} survey the landscape of evaluation methodology threats. Yet the non-English evaluation ecosystem is growing faster than the auditing infrastructure that could validate it: new benchmarks for Turkish \cite{trmmu2024,tumlu2025}, Hindi \cite{indicmmlu2024}, Bangla \cite{mathshikkha2024}, and dozens of other languages appear on HuggingFace and arXiv without corresponding contamination audits.
 
-Turkish presents a particularly acute case. TR-MMLU~\cite{simsek2025trmmlu} has been publicly available since December 2024 --- approximately 19 months of exposure to training-data collection pipelines --- and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards''~\cite{trmmlu2025quality}. The 2025--2026 Turkish evaluation wave (TUMLU~\cite{barov2025tumlu}, RAGTurk~\cite{metunlp2026ragturk}, Halluverse-M3~\cite{dalgear2026halluverse}) adds four new benchmarks to the ecosystem, none audited for contamination. No contamination-audited Turkish benchmark exists as of this writing.
+Turkish presents a particularly acute case. TR-MMLU \cite{trmmu2024} has been publicly available since December 2024 --- approximately 19 months of exposure to training-data collection pipelines --- and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards'' \cite{trmmuquality2025}. The 2025--2026 Turkish evaluation wave (TUMLU \cite{tumlu2025}, RAGTurk \cite{ragturk2026}, Halluverse-M3 \cite{halluverse2026}) adds four new benchmarks to the ecosystem, none audited for contamination. No contamination-audited Turkish benchmark exists as of this writing.
 
 We address this gap with a pre-registered, API-only contamination audit that introduces two methodological contributions beyond its Turkish scope:
 
 \begin{enumerate}
 \item \textbf{A threshold-sensitivity protocol} that distinguishes verdicts under pooled modalities (RAW) from verdicts after striking the instruction-following-confounded M1 modality (M1-DISCOUNT), preventing false positives from the most common contamination signal.
-\item \textbf{A multi-probe consensus architecture} requiring $\geq$2 of 3 independent modalities to agree before flagging a cell, following the finding that single-probe methods degrade at scale \cite{li2024contamination}.
+\item \textbf{A multi-probe consensus architecture} requiring $\geq$2 of 3 independent modalities to agree before flagging a cell, following the finding that single-probe methods degrade at scale \cite{contamdetect2024}.
 \end{enumerate}
 
 Our audit covers four Turkish benchmarks $\times$ three frontier models $\times$ three probe types, producing 13,193 API calls at \$0.71 total cost --- demonstrating that rigorous contamination auditing is accessible without large compute budgets.
@@ -47,21 +52,21 @@ Our audit covers four Turkish benchmarks $\times$ three frontier models $\times$
 
 \subsection{Benchmark contamination detection}
 
-The contamination detection literature has evolved from simple n-gram overlap \cite{brown2020language} to sophisticated membership-inference attacks \cite{geng2022detecting}, perplexity-based methods \cite{oren2023proving}, and temporal-signal analysis \cite{zhang2025testoftime}. Carlini et al.~\cite{carlini2021extracting} demonstrate that training-data extraction is feasible for large language models, establishing the threat model that contamination audits operationalize. Yang et al.~\cite{yang2024survey} provide a comprehensive taxonomy of data contamination types, distinguishing between verbatim memorization, paraphrase contamination, and structural leakage --- a taxonomy our three-probe design directly maps onto.
+The contamination detection literature has evolved from simple n-gram overlap \cite{brown2020gpt3} to sophisticated membership-inference attacks \cite{geng2022detecting}, perplexity-based methods \cite{oren2023proving}, and temporal-signal analysis \cite{zhang2025test}. Carlini et al. \cite{carlini2021extracting} demonstrate that training-data extraction is feasible for large language models, establishing the threat model that contamination audits operationalize. Yang et al. \cite{yang2024data} provide a comprehensive taxonomy of data contamination types, distinguishing between verbatim memorization, paraphrase contamination, and structural leakage --- a taxonomy our three-probe design directly maps onto.
 
-Recent work has moved toward multi-signal approaches. The Contamination Multiplier framework \cite{contaminationmultiplier2024} combines multiple detection signals with calibrated thresholds. ConStat~\cite{constat2024} operationalizes contamination as ``non-generalizing performance'' --- performance that degrades under concept-preserving perturbation --- providing the theoretical foundation for our M2b cross-lingual fragility probe. The Fragile Reasoning work~\cite{fragilereasoning2025} demonstrates that reasoning abilities can be fragile under surface perturbations, motivating our distractor-flip modality. S\'{a}nchez Salido et al.~\cite{sanchezsalido2025none} introduced MCQ variation that separates memorization from reasoning, finding significant accuracy drops when memorized tokens are disrupted --- our M2a probe extends this principle to Turkish MCQ benchmarks using distractor-flip editing.
+Recent work has moved toward multi-signal approaches. The Contamination Multiplier framework \cite{contammulti2024} combines multiple detection signals with calibrated thresholds. ConStat \cite{constat2024} operationalizes contamination as ``non-generalizing performance'' --- performance that degrades under concept-preserving perturbation --- providing the theoretical foundation for our M2b cross-lingual fragility probe. The Fragile Reasoning work \cite{fragile2025reasoning} demonstrates that reasoning abilities can be fragile under surface perturbations, motivating our distractor-flip modality. S\'{a}nchez Salido et al. \cite{sanchz2025mcq} introduced MCQ variation that separates memorization from reasoning, finding significant accuracy drops when memorized tokens are disrupted --- our M2a probe extends this principle to Turkish MCQ benchmarks using distractor-flip editing.
 
 \subsection{Non-English benchmark auditing}
 
-The Bangla MathShikkha audit~\cite{ahmed2024mathshikkha} establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks~\cite{beyondbenchmarks2025} surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly~\cite{lingley2024lingoly} audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU~\cite{simsek2025trmmlu} introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit~\cite{trmmlu2025quality} documented structural weaknesses but not training-data leakage. Y{\i}ld{\i}z et al.~\cite{yildiz2025evaluating} evaluated quality across 17 Turkish benchmarks, finding structural and cultural issues that compound contamination risk. TurkEmbed~\cite{turkembed2025} and related work build Turkish-specific NLP infrastructure without addressing contamination concerns. In cross-lingual contamination, Abbas et al.~\cite{abbas2026obscuring} showed that translation suppresses conventional contamination indicators in Arabic corpora --- our M2b probe's 3-arm design (TR original $\rightarrow$ back-translation $\rightarrow$ EN direct) extends this insight to Turkish.
+The Bangla MathShikkha audit \cite{mathshikkha2024} establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks \cite{beyondbench2025} surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly \cite{lingoly2024} audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU \cite{trmmu2024} introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit \cite{trmmuquality2025} documented structural weaknesses but not training-data leakage. Y{\i}ld{\i}z et al. \cite{yildiz2025evaluating} evaluated quality across 17 Turkish benchmarks, finding structural and cultural issues that compound contamination risk. TurkEmbed \cite{turkembed2025} and related work build Turkish-specific NLP infrastructure without addressing contamination concerns. In cross-lingual contamination, Abbas et al. \cite{abbas2026obscuring} showed that translation suppresses conventional contamination indicators in Arabic corpora --- our M2b probe's 3-arm design (TR original $\rightarrow$ back-translation $\rightarrow$ EN direct) extends this insight to Turkish.
 
 \subsection{Pre-registration and evaluation methodology}
 
-Pre-registration --- fixing analysis rules before seeing results --- is standard in clinical trials and increasingly advocated for ML evaluation~\cite{pineau2020improving}. The ML Reproducibility Crisis~\cite{gencoglu2019mlcrisis} documents how post-hoc analysis choices inflate reported results. Our protocol pre-registers the exact decision rule, sample size, seed, and consensus architecture before any API calls, following the AsPredicted.org framework adapted for computational experiments.
+Pre-registration --- fixing analysis rules before seeing results --- is standard in clinical trials and increasingly advocated for ML evaluation \cite{pineau2020reproducibility}. The ML Reproducibility Crisis \cite{gencoglu2019reproducibility} documents how post-hoc analysis choices inflate reported results. Our protocol pre-registers the exact decision rule, sample size, seed, and consensus architecture before any API calls, following the AsPredicted.org framework adapted for computational experiments.
 
 \subsection{Honest reporting and null findings}
 
-The ``Contamination Signals, Not Verdicts'' framing follows a growing recognition that contamination auditing produces graded signals, not binary classifications. GAOKAO-Eval~\cite{gaokao2024eval} documents how contamination lets models ``game'' static benchmarks, but the appropriate response is transparent reporting of contamination levels, not abandonment of benchmarks. Our protocol explicitly commits to reporting honest negatives --- cells where no contamination is detected --- as citable scientific findings, not failed experiments.
+The ``Contamination Signals, Not Verdicts'' framing follows a growing recognition that contamination auditing produces graded signals, not binary classifications. GAOKAO-Eval \cite{gaokao2024} documents how contamination lets models ``game'' static benchmarks, but the appropriate response is transparent reporting of contamination levels, not abandonment of benchmarks. Our protocol explicitly commits to reporting honest negatives --- cells where no contamination is detected --- as citable scientific findings, not failed experiments.
 
 \section{Method}
 
@@ -69,43 +74,45 @@ The ``Contamination Signals, Not Verdicts'' framing follows a growing recognitio
 
 We audit four Turkish LLM evaluation benchmarks (Table~\ref{tab:benchmarks}):
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
-\caption{Turkish LLM evaluation benchmarks audited.}
-\label{tab:benchmarks}
-\small
-\begin{tabular}{lllcc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllll}
 \toprule
-\textbf{Benchmark} & \textbf{Source} & \textbf{Format} & \textbf{Items} & \textbf{Public since} \\
+\textbf{Benchmark} & \textbf{Source} & \textbf{Format} & \textbf{Items (sampled)} & \textbf{Public since} \\
 \midrule
-TR-MMLU & \c{S}im\c{s}ek et al.~\cite{simsek2025trmmlu} & MC-QA, 62 sections & 200 & 2024-12-31 \\
-TUMLU-tr & Barov et al.~\cite{barov2025tumlu} & MC-QA, 8 Turkic & 200 & 2025-02-16 \\
-Halluverse-M3-tr & Dal\u{g}ar et al.~\cite{dalgear2026halluverse} & QA + dialogue & 200 & 2026-02-06 \\
-RAGTurk formal\_5k & METU NLP~\cite{metunlp2026ragturk} & QA + passages & 200 & 2026-02-03 \\
+TR-MMLU & \c{S}im\c{s}ek \cite{trmmu2024} & MC-QA, 62 sections & 200 & 2024-12-31 \\
+TUMLU-tr & Barov et al. \cite{tumlu2025} & MC-QA, 8 Turkic languages & 200 & 2025-02-16 \\
+Halluverse-M3-tr & Dal\u{g}ar et al. \cite{halluverse2026} & QA + dialogue summarization & 200 & 2026-02-06 \\
+RAGTurk formal\_5k & METU NLP \cite{ragturk2026} & QA + passage chunks & 200 & 2026-02-03 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
+\caption{Turkish LLM evaluation benchmarks audited in this study. All items are seed-42 matched across probes to ensure paired comparisons.}
+\label{tab:benchmarks}
 \end{table}
 
-All items are seed-42 matched across probes to ensure paired comparisons. TR-MMLU and TUMLU-tr are multiple-choice; Halluverse-M3-tr and RAGTurk are free-form QA.
+TR-MMLU and TUMLU-tr are multiple-choice; Halluverse-M3-tr and RAGTurk are free-form QA.
 
 \subsection{Models}
 
 Three frontier models tested via the opencode-go API (black-box, no weight access):
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
-\caption{Models evaluated in the audit.}
-\label{tab:models}
-\small
-\begin{tabular}{llcc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llll}
 \toprule
-\textbf{Model} & \textbf{Provider} & \textbf{Cost} & \textbf{Notes} \\
+\textbf{Model} & \textbf{Provider} & \textbf{Cost (rated)} & \textbf{Notes} \\
 \midrule
 GPT-5.6-luna & OpenAI & \$0.348 & Subject model \\
-mimo-v2.5 & Xiaomi & \$0.000 & Subject model \\
+mimo-v2.5 & Xiaomi & \$0.000 (uncosted) & Subject model \\
 deepseek-v4-flash & DeepSeek & \$0.358 & Reference cohort \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
+\caption{Models tested in the contamination audit.}
+\label{tab:models}
 \end{table}
 
 DeepSeek serves as the reference model --- a publicly documented, widely-used model that provides baseline contamination signals for comparison.
@@ -125,7 +132,7 @@ Three independent probe modalities, each targeting a different contamination sig
 \item Arm C: English-direct (question and options translated to English)
 \end{itemize}
 
-The contamination signature is \textbf{B collapses while C stays stable} --- the model is anchored to the memorized Turkish surface rather than the underlying concept. This operationalizes ConStat's ``non-generalizing performance''~\cite{constat2024} and our pre-registered M2b\_A/B/C arm design. Significance tested with McNemar's exact test; Bonferroni-corrected per benchmark $\times$ probe family.
+The contamination signature is \textbf{B collapses while C stays stable} --- the model is anchored to the memorized Turkish surface rather than the underlying concept. This operationalizes ConStat's ``non-generalizing performance'' \cite{constat2024} and our pre-registered M2b\_A/B/C arm design. Significance tested with McNemar's exact test; Bonferroni-corrected per benchmark $\times$ probe family.
 
 For RAGTurk (free-form QA, no MCQ structure), M2a is not applicable (no distractors to flip). Arm C is scored against machine-translated gold answers (deepseek-v4-flash, single pass, logged and cached).
 
@@ -159,20 +166,21 @@ The full audit completed with 13,193 logged API calls (planned 13,200; differenc
 
 \subsubsection{TR-MMLU}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
-\caption{TR-MMLU probe results.}
-\label{tab:trmmlu}
-\small
-\begin{tabular}{lcccc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Model} & \textbf{M1 rate} & \textbf{M2a flip} & \textbf{M2b B-vs-A} & \textbf{M2b C-vs-A} \\
+\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
 \midrule
-GPT-5.6-luna & 0.860 & 0.155 & $<$0.001 & 1.000 \\
-mimo-v2.5 & 0.575 & 0.140 & 0.150 & 1.000 \\
-deepseek-v4-flash & 0.780 & 0.145 & 0.004 & 0.239 \\
+GPT-5.6-luna & 0.860 [0.805, 0.901] & 0.155 [0.111, 0.212] & $<$0.001 & 1.000 \\
+mimo-v2.5 & 0.575 [0.506, 0.641] & 0.140 [0.099, 0.195] & 0.150 & 1.000 \\
+deepseek-v4-flash & 0.780 [0.718, 0.832] & 0.145 [0.103, 0.201] & 0.004 & 0.239 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
+\caption{TR-MMLU probe results.}
+\label{tab:trmmu}
 \end{table}
 
 M1 verbatim rates are high for instruction-following models (expected --- M1 is confounded). M2a flip rates are low (9--16\%) across all models. M2b B-vs-A is significant for GPT-5.6-luna and deepseek, but C-vs-A is not significant for any model --- the pattern is back-translation noise, not surface-anchored memorization (C would need to be stable while B collapses for the contamination signature).
@@ -181,20 +189,21 @@ M1 verbatim rates are high for instruction-following models (expected --- M1 is 
 
 \subsubsection{TUMLU-tr}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
+\midrule
+GPT-5.6-luna & 0.885 [0.833, 0.922] & 0.096 [0.062, 0.144] & $<$0.001 & 0.040 \\
+mimo-v2.5 & 0.365 [0.301, 0.434] & 0.111 [0.074, 0.162] & $<$0.001 & 1.000 \\
+deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & $<$0.001 & 0.831 \\
+\bottomrule
+\end{tabular}%
+}
 \caption{TUMLU-tr probe results.}
 \label{tab:tumlu}
-\small
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Model} & \textbf{M1 rate} & \textbf{M2a flip} & \textbf{M2b B-vs-A} & \textbf{M2b C-vs-A} \\
-\midrule
-GPT-5.6-luna & 0.885 & 0.096 & $<$0.001 & 0.040 \\
-mimo-v2.5 & 0.365 & 0.111 & $<$0.001 & 1.000 \\
-deepseek-v4-flash & 0.570 & 0.111 & $<$0.001 & 0.831 \\
-\bottomrule
-\end{tabular}
 \end{table}
 
 TUMLU-tr shows the strongest M2b B-vs-A signals across all models --- all significant after Bonferroni. However, for GPT-5.6-luna and deepseek, C-vs-A is also significant or near-significant, suggesting general translation quality degradation rather than surface-specific fragility. For mimo-v2.5, C-vs-A is perfectly stable ($p=1.000$), but only 1/3 modalities indicates (M2b alone), which does not meet the $\geq$2/3 threshold.
@@ -205,20 +214,21 @@ The critical cell: \textbf{deepseek-v4-flash $\times$ TUMLU-tr} reaches signific
 
 \subsubsection{Halluverse-M3-tr}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b Arm A accuracy} \\
+\midrule
+GPT-5.6-luna & 0.000 [0.000, 0.019] & 0.090 [0.058, 0.138] & 0.025 \\
+mimo-v2.5 & 0.000 [0.000, 0.019] & 0.085 [0.054, 0.132] & 0.045 \\
+deepseek-v4-flash & 0.000 [0.000, 0.019] & 0.110 [0.074, 0.161] & 0.055 \\
+\bottomrule
+\end{tabular}%
+}
 \caption{Halluverse-M3-tr probe results.}
 \label{tab:halluverse}
-\small
-\begin{tabular}{lccc}
-\toprule
-\textbf{Model} & \textbf{M1 rate} & \textbf{M2a flip} & \textbf{M2b Arm A} \\
-\midrule
-GPT-5.6-luna & 0.000 & 0.090 & 0.025 \\
-mimo-v2.5 & 0.000 & 0.085 & 0.045 \\
-deepseek-v4-flash & 0.000 & 0.110 & 0.055 \\
-\bottomrule
-\end{tabular}
 \end{table}
 
 Halluverse shows \textbf{zero verbatim recall} across all models --- a clean negative signal for M1. M2a flip rates are low (9--11\%). M2b free-form QA baseline is low (2.5--5.5\% for Arm A), limiting the fragility contrast. The M2a McNemar discordance is dominated by the structure effect (moving from free-form to 2-option format rescues items), not flip-following.
@@ -227,20 +237,21 @@ Halluverse shows \textbf{zero verbatim recall} across all models --- a clean neg
 
 \subsubsection{RAGTurk formal\_5k}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2b Arm A accuracy} & \textbf{M2b Arm C accuracy} \\
+\midrule
+GPT-5.6-luna & 0.052 [0.028, 0.093] & 0.080 & 0.000 \\
+mimo-v2.5 & 0.030 [0.014, 0.064] & 0.025 & 0.000 \\
+deepseek-v4-flash & 0.070 [0.042, 0.114] & 0.070 & 0.000 \\
+\bottomrule
+\end{tabular}%
+}
 \caption{RAGTurk formal\_5k probe results.}
 \label{tab:ragturk}
-\small
-\begin{tabular}{lccc}
-\toprule
-\textbf{Model} & \textbf{M1 rate} & \textbf{M2b Arm A} & \textbf{M2b Arm C} \\
-\midrule
-GPT-5.6-luna & 0.052 & 0.080 & 0.000 \\
-mimo-v2.5 & 0.030 & 0.025 & 0.000 \\
-deepseek-v4-flash & 0.070 & 0.070 & 0.000 \\
-\bottomrule
-\end{tabular}
 \end{table}
 
 RAGTurk accuracies are lower bounds under the precision-first matcher (measured recall 0.371 on 106 labeled pairs). Arm C is scored against machine-translated golds --- an extra noise source. The zero accuracy for Arm C across all models reflects the combined difficulty of English-translated QA scoring, not necessarily model failure.
@@ -249,29 +260,30 @@ RAGTurk accuracies are lower bounds under the precision-first matcher (measured 
 
 \subsection{Adjudication summary}
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
-\caption{Adjudication summary across all benchmark $\times$ model cells.}
-\label{tab:adjudication}
-\small
-\begin{tabular}{llccc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcc}
 \toprule
-\textbf{Benchmark} & \textbf{Model} & \textbf{RAW} & \textbf{M1-DISC} & \textbf{Final} \\
+\textbf{Benchmark} & \textbf{Model} & \textbf{RAW} & \textbf{M1-DISCOUNT} \\
 \midrule
-TR-MMLU & GPT-5.6-luna & Not flagged & Not flagged & \textbf{Not flagged} \\
-TR-MMLU & mimo-v2.5 & Not flagged & Not flagged & \textbf{Not flagged} \\
-TR-MMLU & deepseek-v4 & Not flagged & Not flagged & \textbf{Not flagged} \\
-TUMLU-tr & GPT-5.6-luna & Not flagged & Not flagged & \textbf{Not flagged} \\
-TUMLU-tr & mimo-v2.5 & Not flagged & Not flagged & \textbf{Not flagged} \\
-TUMLU-tr & deepseek-v4 & Flagged (2/3) & Not flagged & \textbf{THRESHOLD-DEP.} \\
-Halluverse-M3 & GPT-5.6-luna & Not flagged & Not flagged & \textbf{Not flagged} \\
-Halluverse-M3 & mimo-v2.5 & Not flagged & Not flagged & \textbf{Not flagged} \\
-Halluverse-M3 & deepseek-v4 & Not flagged & Not flagged & \textbf{Not flagged} \\
-RAGTurk & GPT-5.6-luna & Not flagged & Not flagged & \textbf{Not flagged} \\
-RAGTurk & mimo-v2.5 & Not flagged & Not flagged & \textbf{Not flagged} \\
-RAGTurk & deepseek-v4 & Not flagged & Not flagged & \textbf{Not flagged} \\
+TR-MMLU & GPT-5.6-luna & --- & --- \\
+TR-MMLU & mimo-v2.5 & --- & --- \\
+TR-MMLU & deepseek-v4-flash & --- & --- \\
+TUMLU-tr & GPT-5.6-luna & --- & --- \\
+TUMLU-tr & mimo-v2.5 & --- & --- \\
+TUMLU-tr & deepseek-v4-flash & Flagged (2/3) & \textit{Flagged} (1/3) \\
+Halluverse-M3-tr & GPT-5.6-luna & --- & --- \\
+Halluverse-M3-tr & mimo-v2.5 & --- & --- \\
+Halluverse-M3-tr & deepseek-v4-flash & --- & --- \\
+RAGTurk formal\_5k & GPT-5.6-luna & --- & --- \\
+RAGTurk formal\_5k & mimo-v2.5 & --- & --- \\
+RAGTurk formal\_5k & deepseek-v4-flash & --- & --- \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
+\caption{Adjudication summary. Under the M1-DISCOUNT rule, zero cells are flagged as contaminated. One cell (TUMLU-tr $\times$ deepseek-v4-flash) is classified as THRESHOLD-DEPENDENT.}
+\label{tab:adjudication}
 \end{table}
 
 \textbf{Headline: 0/12 cells flagged under the pre-registered M1-DISCOUNT rule. 1/12 cells flagged under RAW but reclassified as THRESHOLD-DEPENDENT.}
@@ -286,7 +298,7 @@ This finding generalizes beyond Turkish: any contamination audit that pools M1-s
 
 \subsection{Honest negatives are scientific contributions}
 
-All 12 cells produce honest negatives under the adjudicated rule. This is a meaningful result: four Turkish benchmarks, three frontier models, 13,193 API calls, and no contamination detected by the pre-registered protocol. The honest-negative framing follows the growing recognition that null findings are citable contributions when the protocol is pre-registered and the sample is adequate~\cite{pineau2020improving}.
+All 12 cells produce honest negatives under the adjudicated rule. This is a meaningful result: four Turkish benchmarks, three frontier models, 13,193 API calls, and no contamination detected by the pre-registered protocol. The honest-negative framing follows the growing recognition that null findings are citable contributions when the protocol is pre-registered and the sample is adequate \cite{pineau2020reproducibility}.
 
 \subsection{Cost accessibility}
 
@@ -307,7 +319,7 @@ The total audit cost of \$0.71 demonstrates that rigorous contamination auditing
 
 \item \textbf{Model selection.} We test three models (gpt-5.6-luna, mimo-v2.5, deepseek-v4-flash). Other models deployed to Turkish users (e.g., GPT-4o, Claude, Gemini) may show different contamination profiles. Our findings are scope-limited to these three models.
 
-\item \textbf{Benchmark selection.} We audit four benchmarks. Other Turkish evaluation datasets (e.g., Cetvel~\cite{yildiz2025evaluating}, Turkish SuperGLUE) may have different contamination profiles. The ``no contamination detected'' finding applies only to these four benchmarks under these probes.
+\item \textbf{Benchmark selection.} We audit four benchmarks. Other Turkish evaluation datasets (e.g., Cetvel \cite{yildiz2025evaluating}, Turkish SuperGLUE) may have different contamination profiles. The ``no contamination detected'' finding applies only to these four benchmarks under these probes.
 
 \item \textbf{No corpus-overlap probe (M3).} The pre-registration described an M3 corpus-overlap modality using n-gram matching against training corpora. This was not executed in the current run due to cost and access constraints (requires corpus access or large-scale n-gram indexing). M3 would provide independent corroboration of M1/M2 signals.
 
@@ -320,12 +332,11 @@ We present the first multi-probe contamination audit of the Turkish LLM evaluati
 
 The methodological contribution --- the RAW + M1-DISCOUNT dual-reporting convention --- generalizes beyond Turkish to any contamination audit that pools verbatim-recall signals with dynamic-arm signals. We release all data, code, and pre-registration artifacts for reproducibility and encourage the community to adopt multi-probe consensus auditing as standard practice for non-English benchmark validation.
 
-\appendix
+\section*{Appendices}
 
-\section{Pre-registration (verbatim)}
+\subsection*{Appendix A: Pre-registration (verbatim)}
 
-The full pre-registration document is published alongside this paper at \texttt{notes/pre\_reg\_full\_2026-08-16.md}. Key elements:
-
+The full pre-registration document is published alongside this paper. Key elements:
 \begin{itemize}
 \item \textbf{H0:} No statistically significant memorization signal detected by probes M1/M2 per benchmark $\times$ model cell.
 \item \textbf{Decision rule:} Flag only if $\geq$2/3 modalities indicate AND $\geq$1 dynamic arm $p < 0.05$ (Bonferroni).
@@ -334,33 +345,36 @@ The full pre-registration document is published alongside this paper at \texttt{
 \item \textbf{Cost cap:} \$2.00 hard abort.
 \end{itemize}
 
-\section{Matcher documentation (RAGTurk fix 3)}
+\subsection*{Appendix B: Matcher documentation (RAGTurk fix 3)}
 
-The RAGTurk QA matcher (\texttt{harness/qa\_matcher.py}) uses a precision-first cascade: empty guard $\rightarrow$ letter-form $\rightarrow$ exact match $\rightarrow$ number guard $\rightarrow$ containment $\rightarrow$ paraphrase $\rightarrow$ long-descriptive. Measured on 106 hand-labeled pilot pairs: precision 1.000, recall 0.371, accuracy 0.792. The deliberate low recall means every RAGTurk accuracy is a conservative lower bound. A lenient sensitivity variant (no content-token guard) is logged per call and reported as a sensitivity column for RAGTurk only.
+The RAGTurk QA matcher uses a precision-first cascade: empty guard $\rightarrow$ letter-form $\rightarrow$ exact match $\rightarrow$ number guard $\rightarrow$ containment $\rightarrow$ paraphrase $\rightarrow$ long-descriptive. Measured on 106 hand-labeled pilot pairs: precision 1.000, recall 0.371, accuracy 0.792. The deliberate low recall means every RAGTurk accuracy is a conservative lower bound. A lenient sensitivity variant (no content-token guard) is logged per call and reported as a sensitivity column for RAGTurk only.
 
-\section{Spend log summary}
+\subsection*{Appendix C: Spend log summary}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
-\caption{API call statistics and cost breakdown.}
-\label{tab:spend}
-\small
-\begin{tabular}{lccccr}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
 \toprule
 \textbf{Model} & \textbf{Calls} & \textbf{OK} & \textbf{Fail} & \textbf{Retries} & \textbf{Cost} \\
 \midrule
 GPT-5.6-luna & 3,798 & 3,759 & 39 & 255 & \$0.348 \\
 mimo-v2.5 & 3,798 & 3,798 & 0 & 0 & \$0.000 \\
-deepseek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
+DeepSeek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
 \midrule
 \textbf{TOTAL} & \textbf{13,193} & \textbf{13,154} & \textbf{39} & \textbf{255} & \textbf{\$0.707} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
+\caption{Spend log summary for the full audit.}
+\label{tab:spend}
 \end{table}
 
 26 spend checkpoints logged; no cost cap breach. Total project spend including preparatory smoke/pilot runs: \$0.89 (gpt-5.6-luna \$0.43, deepseek-v4-flash \$0.45, mimo-v2.5 uncosted).
 
-\bibliography{custom}
+\section*{References}
+
 \bibliographystyle{acl_natbib}
+\bibliography{custom}
 
 \end{document}
