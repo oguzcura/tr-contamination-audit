@@ -320,4 +320,4 @@ The RAGTurk QA matcher (`harness/qa_matcher.py`) uses a precision-first cascade:
 | DeepSeek-v4-flash | 5,597 | 5,597 | 0 | 0 | $0.358 |
 | **TOTAL** | **13,193** | **13,154** | **39** | **255** | **$0.707** |
 
-26 spend checkpoints logged; no cost cap breach.
+26 spend checkpoints logged; no cost cap breach. Total project spend including preparatory smoke/pilot runs: $0.89 (gpt-5.6-luna $0.43, deepseek-v4-flash $0.45, mimo-v2.5 uncosted).
