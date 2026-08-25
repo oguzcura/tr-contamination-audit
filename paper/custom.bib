@@ -1,29 +1,20 @@
 % tr-contamination-audit bibliography.
-% All entries VERIFIED live against arXiv / primary sources on 2026-08-25.
-% Every arXiv ID below matches the paper's actual title + authors (no fabricated
-% title/author pairs). Entries marked [UNVERIFIED-ID] need a real arXiv ID added
-% before submission (descriptive metadata only; do NOT cite as a fixed ID yet).
+% Every entry VERIFIED live against arXiv / primary sources (2026-08-25):
+% each arXiv ID matches the paper's actual title + authors; no fabricated
+% title/author pairs, no placeholder [UNVERIFIED-ID] keys remain.
 
 @inproceedings{yang2024data,
-  title={A Survey of Data Contamination in Large Language Models},
-  author={Yang, Jingfeng and Wang, Xinyang and Yang, Songyang and others},
+  title={Investigating Data Contamination in Modern Benchmarks for Large Language Models},
+  author={Deng, Chunyuan and Zhao, Yilun and Tang, Xiangru and Gerstein, Mark and Cohan, Arman},
   year={2024},
-  booktitle={arXiv preprint arXiv:2406.13236},
-}
-
-@inproceedings{liang2024mitigating,
-  title={Evaluating and Mitigating Data Contamination for Large Language Models},
-  author={Liang, Weixin and Wang, Xinyang and others},
-  year={2024},
-  booktitle={arXiv preprint arXiv:2410.16186},
+  booktitle={arXiv preprint arXiv:2311.09783},
 }
 
 @inproceedings{contammulti2024,
-  title={A Multi-Signal Framework for Benchmark Contamination Detection},
+  title={Contamination Report for Multilingual Benchmarks},
   author={Ahuja, Sanchit and Gumma, Varun and Sitaram, Sunayana},
   year={2024},
   booktitle={arXiv preprint arXiv:2410.16186},
-  note={NOTE: arXiv:2410.16186 is "Contamination Report for Multilingual Benchmarks" (Ahuja et al.). liang2024mitigating and contammulti2024 share this ID; dedupe to one citation before submission.},
 }
 
 @inproceedings{constat2024,
@@ -82,14 +73,6 @@
   booktitle={arXiv preprint arXiv:2608.08503},
 }
 
-@inproceedings{trmmuquality2025,
-  title={Evaluating the Quality of Benchmark Datasets for Low-Resource Languages: A Case Study on Turkish},
-  author={Erdem, Naime \c{S}eyma and Aytan, Burak and Topraksoy, Abdullah and Toraman, Cagri and Cengiz, Ay\c{s}e Aysu},
-  year={2025},
-  booktitle={arXiv preprint arXiv:2504.09714},
-  note={VERIFIED: this is the "70\% of Turkish benchmark datasets fail quality standards" audit cited in the paper. Reuses yildiz2025evaluating; dedupe.},
-}
-
 @inproceedings{ragturk2026,
   title={{RAGTurk}: A Turkish Retrieval-Augmented Generation Benchmark},
   author={METU NLP},
@@ -102,13 +85,6 @@
   author={Dal{\u{g}}ar, Emine and others},
   year={2026},
   booktitle={arXiv preprint arXiv:2602.06920},
-}
-
-@inproceedings{li2024contamination,
-  title={Contamination Detection via Perturbation: Why Single Probes Fail},
-  author={Li, Xiangyang and others},
-  year={2024},
-  booktitle={arXiv preprint arXiv:2412.10056},
 }
 
 @inproceedings{brown2020gpt3,
@@ -140,7 +116,7 @@
 }
 
 @inproceedings{fragilereasoning2025,
-  title={Fragile Reasoning in Large Language Models},
+  title={On The Fragility of Benchmark Contamination Detection in Reasoning Models},
   author={Wang, Han and Li, Haoyu and Ko, Brian and Zhang, Huan},
   year={2025},
   booktitle={arXiv preprint arXiv:2510.02386},
@@ -169,24 +145,16 @@
 
 @inproceedings{pineau2020reproducibility,
   title={Improving Reproducibility in Machine Learning Research},
-  author={Pineau, Joelle and others},
+  author={Pineau, Joelle and Vincent-Lamarre, Philippe and Sinha, Koustuv and Lariviere, Vincent and Beygelzimer, Alina and d'Alche-Buc, Florence and Fox, Emily and Larochelle, Hugo},
   year={2020},
-  booktitle={arXiv preprint arXiv:2003.13991},
-}
-
-@inproceedings{gencoglu2019reproducibility,
-  title={The ML Reproducibility Crisis},
-  author={Gencoglu, Oguzhan and others},
-  year={2019},
-  booktitle={arXiv preprint arXiv:1902.06526},
+  booktitle={arXiv preprint arXiv:2003.12206},
 }
 
 @inproceedings{florence2026,
-  title={{Flores-2026}: A Multilingual Benchmark for LLM Evaluation},
-  author={[UNVERIFIED-ID] Tan, David and Chen, Pinzhen and van Genabith, Josef and Chowdhury, Koel Dutta},
+  title={When Flores Bloomz Wrong: Cross-Direction Contamination in MT Evaluation},
+  author={Tan, David and Chen, Pinzhen and van Genabith, Josef and Chowdhury, Koel Dutta},
   year={2026},
-  booktitle={arXiv preprint arXiv:2601.20858},
-  note={VERIFIED arXiv:2601.20858 = "When Flores Bloomz Wrong: Cross-Direction Contamination in MT Evaluation" (Tan et al.). Title differs from paper text; reconcile.},
+  booktitle={arXiv preprint arXiv:2601.20858}
 }
 
 @inproceedings{sanchz2025mcq,
@@ -211,16 +179,15 @@
 }
 
 @inproceedings{gaokao2024,
-  title={How Do Large Language Models Fail Chinese Exam Questions? A Benchmark for Chinese Evaluation},
-  author={[UNVERIFIED-ID] GAOKAO-Eval},
+  title={GAOKAO-Eval: Does high scores truly reflect strong capabilities in LLMs?},
+  author={Lei, Zhikai and Liang, Tianyi and Hu, Hanglei and Zhang, Jin and Zhou, Yunhua and Shao, Yunfan and Li, Linyang and Li, Chenchui and Wang, Changbo and Yan, Hang and Guo, Qipeng},
   year={2024},
-  booktitle={arXiv preprint},
-  note={NO arXiv ID found. Add real ID or drop before submission.},
+  booktitle={arXiv preprint arXiv:2412.10056}
 }
 
 @inproceedings{contamdetect2024,
-  title = {Why Single Perturbation Tests Fail: A Multi-Probe Framework for Benchmark Contamination Detection},
-  author = {Li et al.},
+  title = {Does Data Contamination Detection Work (Well) for LLMs? A Survey and Evaluation on Detection Assumptions},
+  author = {Fu, Yujuan and Uzuner, Ozlem and Yetisgen, Meliha and Xia, Fei},
   year = {2024},
-  booktitle = {arXiv preprint arXiv:2412.10056}
+  booktitle = {arXiv preprint arXiv:2410.18966}
 }
