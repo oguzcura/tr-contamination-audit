@@ -4,18 +4,20 @@ Multi-benchmark contamination audit of Turkish LLM benchmarks (TR-MMLU, TUMLU-tr
 
 This is the artifact repository for the multi-benchmark Turkish contamination audit (the sibling of [oguzcura/trmlu-audit](https://github.com/oguzcura/trmlu-audit), which covers the TR-MMLU paper only). It holds the frozen pre-registration (hypotheses, decision rules), the probe harness, the verified dataset snapshots, and full n=200 results.
 
-**Status: FULL RUN COMPLETE (2026-08-17).** 13,193 API calls, 0/12 cells flagged under M1-DISCOUNT. See `paper/paper2_workshop_draft.md` for the workshop paper and `notes/full_results_2026-08-16.md` for the full report.
+**Status: FULL RUN COMPLETE (2026-08-17).** 13,193 API calls, 0/12 cells flagged under M1-DISCOUNT. See [`paper/paper2_workshop.tex`](paper/paper2_workshop.tex) for the workshop paper and [`notes/full_results_2026-08-16.md`](notes/full_results_2026-08-16.md) for the full report.
 
 ## Repository structure
 
 | Path | Contents |
 |------|----------|
 | `pre-registration.md` | Frozen design doc: H0/H1, probe definitions M1/M2/M3, sampling & matched-subset statistics, decision rule (frozen 2026-08-16) |
-| `harness/` | Probe harness: dataset builder, M1 probe, cross-lingual 3-arm probe, analyzers |
+| `harness/` | Probe harness: dataset builder, M1 probe, cross-lingual 3-arm probe, analyzers, positive-control |
 | `data/` | Verified dataset snapshots (CSV) + `manifest.json`; see `data/README.md` |
 | `harness/results/` | Full n=200 audit trail: `full_audit_2026-08-16.jsonl` (13,198 lines), `full_stats_2026-08-16.json`, spend logs, digest |
 | `notes/` | Results report, pilot results, pre-registration, verification pass |
-| `paper/` | Workshop draft (`paper2_workshop_draft.md`), skeleton, README |
+| `paper/` | Workshop paper source ([`paper2_workshop.tex`](paper/paper2_workshop.tex)), full version ([`paper2.tex`](paper/paper2.tex)), verified references (`paper/custom.bib`) |
+
+The workshop/full papers compile with `tectonic` (e.g. `cd paper && tectonic paper2_workshop.tex`); the review version uses `\usepackage[review]{acl}` for double-blind submission.
 
 ## Key results
 
@@ -30,9 +32,23 @@ This is the artifact repository for the multi-benchmark Turkish contamination au
 
 ## Probes (per pre-registration §3)
 
-- **M1 — Verbatim-recall / recognition:** shuffled-option verbatim reproduction; 8-gram overlap signature. (`harness/probe_m1.py`)
+- **M1 — Verbatim-recall / recognition:** the model is asked to reproduce a benchmark item's question + chosen option verbatim; high overlap indicates the item surface was seen. (`harness/probe_m1.py`)
 - **M2 — Option-perturbation / surface-fragility:** M2a flipped distractor, M2b cross-lingual back-translation arms A/B/C. (`harness/crosslingual_probe.py`)
 - **M3 — Overlap statistics:** contiguous 13-gram exact-match against public Turkish corpora (CulturaX-tr, Wikipedia-tr); descriptive baseline only. *(Not executed in full run — see limitations.)*
+
+## Positive-control validation
+
+To show the protocol is not a silent no-op, `harness/positive_control.py` re-runs
+the **same pipeline** (identical arms, scoring, and `core.make_client()` transport)
+on an induced-leak variant of the TR-MMLU seed-42 sample (each prompt augmented
+with the verbatim correct answer letter). The control confirms **M1 sensitivity**
+(planted-match rate 0.86 vs natural M1 verbatim 0.78) but shows the M2b signature
+does *not* fire on induced-leak items (all arms at ceiling) — because the
+manipulation induces compliance, not the Turkish-surface anchoring M2b targets. A
+full M2b positive control would require a model known to be contaminated on a
+Turkish surface, which the API-only constraint does not provide. Results are in
+`harness/results/positive_control_2026-08-25.jsonl`; `harness/analyze_positive_control.py`
+prints the arm accuracies and signature check.
 
 ## Reproduction
 
