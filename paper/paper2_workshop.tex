@@ -75,6 +75,8 @@ RAGTurk formal\_5k & METU NLP \cite{ragturk2026} & QA + passage chunks & 200 & 2
 \label{tab:benchmarks}
 \end{table*}
 
+\noindent\textbf{Answer-key format artifacts.} Over the 200 sampled items, TR-MMLU's key is near-balanced (A 23.5 / B 23.5 / C 19.5 / D 15.0 / E 18.5\%) while TUMLU-tr is skewed to D (45\%, uniform = 25\%). Because a D-skew would let a naive modal-letter baseline score 45\% by chance structure, our probes use position-invariant M2a/M2b signals rather than raw option-letter agreement.
+
 \begin{table*}[t]
 \centering
 \begin{adjustbox}{max width=\textwidth}

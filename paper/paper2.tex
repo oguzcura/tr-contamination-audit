@@ -34,11 +34,11 @@ Benchmark contamination --- the leakage of evaluation items into training data -
 
 \section{Introduction}
 
-The trustworthiness of LLM leaderboards depends on a simple assumption: benchmark items remain unseen by the models being evaluated. When this assumption is violated --- through training-data contamination --- reported performance reflects memorization rather than capability, undermining model selection and scientific inference \cite{yang2024data,liang2024mitigating,constat2024}.
+The trustworthiness of LLM leaderboards depends on a simple assumption: benchmark items remain unseen by the models being evaluated. When this assumption is violated --- through training-data contamination --- reported performance reflects memorization rather than capability, undermining model selection and scientific inference \cite{yang2024data,liang2024survey,constat2024}.
 
 Contamination detection has become a major research thrust for English benchmarks. Geng et al. \cite{geng2022detecting} propose membership-inference-based detection; Mattern et al. \cite{mattern2023code} study data contamination in code LLMs; Liang et al. \cite{liang2024survey} survey the landscape of evaluation methodology threats. Yet the non-English evaluation ecosystem is growing faster than the auditing infrastructure that could validate it: new benchmarks for Turkish \cite{trmmu2024,tumlu2025}, Hindi \cite{indicmmlu2024}, Bangla \cite{mathshikkha2024}, and dozens of other languages appear on HuggingFace and arXiv without corresponding contamination audits.
 
-Turkish presents a particularly acute case. TR-MMLU \cite{trmmu2024} has been publicly available since December 2024 --- approximately 19 months of exposure to training-data collection pipelines --- and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards'' \cite{trmmuquality2025}. The 2025--2026 Turkish evaluation wave (TUMLU \cite{tumlu2025}, RAGTurk \cite{ragturk2026}, Halluverse-M3 \cite{halluverse2026}) adds four new benchmarks to the ecosystem, none audited for contamination. No contamination-audited Turkish benchmark exists as of this writing.
+Turkish presents a particularly acute case. TR-MMLU \cite{trmmu2024} has been publicly available since December 2024 --- approximately 19 months of exposure to training-data collection pipelines --- and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards'' \cite{yildiz2025evaluating}. The 2025--2026 Turkish evaluation wave (TUMLU \cite{tumlu2025}, RAGTurk \cite{ragturk2026}, Halluverse-M3 \cite{halluverse2026}) adds four new benchmarks to the ecosystem, none audited for contamination. No contamination-audited Turkish benchmark exists as of this writing.
 
 We address this gap with a pre-registered, API-only contamination audit that introduces two methodological contributions beyond its Turkish scope:
 
@@ -48,6 +48,8 @@ We address this gap with a pre-registered, API-only contamination audit that int
 \end{enumerate}
 
 Our audit covers four Turkish benchmarks $\times$ three frontier models $\times$ three probe types, producing 13,193 API calls at \$0.71 total cost --- demonstrating that rigorous contamination auditing is accessible without large compute budgets.
+
+Unlike single-probe perturbation audits \\cite{sanchz2025mcq,fragilereasoning2025,contamdetect2024}, our contribution is the \emph{reporting protocol} as much as the probes: every benchmark$\times$model cell is disclosed (not only flagged ones), each carries a RAW vs.\ M1-DISCOUNT reading so instruction-following confounds cannot masquerade as contamination, and cells with no detected signal are reported as citable honest negatives under a pre-registered decision rule. This makes the audit falsifiable and reproducible rather than a binary ``contaminated / clean'' verdict on a single signal.
 
 \section{Related Work}
 
@@ -59,11 +61,11 @@ Recent work has moved toward multi-signal approaches. The Contamination Multipli
 
 \subsection{Non-English benchmark auditing}
 
-The Bangla MathShikkha audit \cite{mathshikkha2024} establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks \cite{beyondbench2025} surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly \cite{lingoly2024} audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU \cite{trmmu2024} introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit \cite{trmmuquality2025} documented structural weaknesses but not training-data leakage. Y{\i}ld{\i}z et al. \cite{yildiz2025evaluating} evaluated quality across 17 Turkish benchmarks, finding structural and cultural issues that compound contamination risk. TurkEmbed \cite{turkembed2025} and related work build Turkish-specific NLP infrastructure without addressing contamination concerns. In cross-lingual contamination, Abbas et al. \cite{abbas2026obscuring} showed that translation suppresses conventional contamination indicators in Arabic corpora --- our M2b probe's 3-arm design (TR original $\rightarrow$ back-translation $\rightarrow$ EN direct) extends this insight to Turkish.
+The Bangla MathShikkha audit \cite{mathshikkha2024} establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks \cite{beyondbench2025} surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly \cite{lingoly2024} audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU \cite{trmmu2024} introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit \cite{yildiz2025evaluating} documented structural weaknesses but not training-data leakage. Y{\i}ld{\i}z et al. \cite{yildiz2025evaluating} evaluated quality across 17 Turkish benchmarks, finding structural and cultural issues that compound contamination risk. TurkEmbed \cite{turkembed2025} and related work build Turkish-specific NLP infrastructure without addressing contamination concerns. In cross-lingual contamination, Abbas et al. \cite{abbas2026obscuring} showed that translation suppresses conventional contamination indicators in Arabic corpora --- our M2b probe's 3-arm design (TR original $\rightarrow$ back-translation $\rightarrow$ EN direct) extends this insight to Turkish.
 
 \subsection{Pre-registration and evaluation methodology}
 
-Pre-registration --- fixing analysis rules before seeing results --- is standard in clinical trials and increasingly advocated for ML evaluation \cite{pineau2020reproducibility}. The ML Reproducibility Crisis \cite{gencoglu2019reproducibility} documents how post-hoc analysis choices inflate reported results. Our protocol pre-registers the exact decision rule, sample size, seed, and consensus architecture before any API calls, following the AsPredicted.org framework adapted for computational experiments.
+Pre-registration --- fixing analysis rules before seeing results --- is standard in clinical trials and increasingly advocated for ML evaluation \cite{pineau2020reproducibility}. The ML reproducibility crisis documents how post-hoc analysis choices inflate reported results \cite{pineau2020reproducibility}; our protocol pre-registers the exact decision rule, sample size, seed, and consensus architecture before any API calls, following the AsPredicted.org framework adapted for computational experiments.
 
 \subsection{Honest reporting and null findings}
 
@@ -94,6 +96,27 @@ RAGTurk formal\_5k & METU NLP \cite{ragturk2026} & QA + passage chunks & 200 & 2
 \end{table*}
 
 TR-MMLU and TUMLU-tr are multiple-choice; Halluverse-M3-tr and RAGTurk are free-form QA.
+
+\subsection{Answer-key format artifacts}
+
+Before running probes, we characterize the answer-key letter distribution of the two MC-QA benchmarks (Table~\ref{tab:keyfreq}) to check whether a static positional prior could confound the audit. A benchmark whose key is skewed toward one letter is vulnerable to position-bias artifacts independent of contamination; reporting the distribution lets reviewers judge whether our probes control for it.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Benchmark} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\
+\midrule
+TR-MMLU (5-opt) & 23.5 & 23.5 & 19.5 & 15.0 & 18.5 \\
+TUMLU-tr (4-opt) & 15.5 & 17.5 & 22.0 & 45.0 & -- \\
+\bottomrule
+\end{tabular}
+\caption{Answer-key letter frequency (\%) over the 200 sampled items per benchmark. TR-MMLU is near-balanced (uniform = 20\%); TUMLU-tr is skewed toward D (45\%), a format artifact we control for via the position-robust M2a/M2b probes rather than naive option matching.}
+\label{tab:keyfreq}
+\end{table}
+
+TR-MMLU's key is near-uniform, so no static positional prior threatens its cells. TUMLU-tr's D-skew (45\%) means a naive ``pick the modal letter'' baseline would score 45\% by chance structure alone; our probes therefore rely on cross-lingual fragility (M2b) and distractor-flip (M2a) signals that are position-invariant, not raw option-letter agreement.
 
 \subsection{Models}
 
