@@ -35,7 +35,7 @@ The trustworthiness of LLM leaderboards depends on a simple assumption: benchmar
 
 Contamination detection has become a major research thrust for English benchmarks \cite{geng2022detecting,mattern2023code,liang2024survey}. Yet the non-English evaluation ecosystem is growing faster than the auditing infrastructure that could validate it: new benchmarks for Turkish \cite{trmmu2024,tumlu2025}, Hindi \cite{indicmmlu2024}, Bangla \cite{mathshikkha2024}, and dozens of other languages appear without corresponding contamination audits.
 
-Turkish presents a particularly acute case. TR-MMLU \cite{trmmu2024} has been publicly available since December 2024---approximately 19 months of exposure to training-data collection pipelines---and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards'' \cite{yildiz2025evaluating}. The 2025--2026 Turkish evaluation wave (TUMLU \cite{tumlu2025}, RAGTurk \cite{ragturk2026}, Halluverse-M3 \cite{halluverse2026}) adds four new benchmarks to the ecosystem, none audited for contamination.
+Turkish presents a particularly acute case. TR-MMLU \cite{trmmu2024} has been publicly available since December 2024---approximately 19 months of exposure to training-data collection pipelines---and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards'' \cite{yildiz2025evaluating}. The 2025--2026 Turkish evaluation wave (TUMLU \cite{tumlu2025}, RAGTurk \cite{ragturk2026}, Halluverse-M3 \cite{halluverse2026}) adds three new benchmarks to the ecosystem, none audited for contamination.
 
 We address this gap with a pre-registered, API-only contamination audit that introduces two methodological contributions beyond its Turkish scope:
 \begin{enumerate}
@@ -86,7 +86,7 @@ RAGTurk formal\_5k & METU NLP \cite{ragturk2026} & QA + passage chunks & 200 & 2
 \midrule
 GPT-5.6-luna & OpenAI & \$0.348 & Subject model \\
 mimo-v2.5 & Xiaomi & \$0.000 (uncosted) & Subject model \\
-deepseek-v4-flash & DeepSeek & \$0.358 & Reference cohort \\
+deepseek-v4-flash & DeepSeek & \$0.358 & Subject model (fixed translator) \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
@@ -121,17 +121,17 @@ Table~\ref{tab:mcq} presents combined results for the two MCQ benchmarks.
 \begin{table*}[t]
 \centering
 \begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{llccccc}
+\begin{tabular}{llcccccc}
 \toprule
-\textbf{Benchmark} & \textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
+\textbf{Benchmark} & \textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B acc} & \textbf{M2b C acc} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
 \midrule
-\multirow{3}{*}{TR-MMLU} & GPT-5.6-luna & 0.860 [0.805, 0.901] & 0.155 [0.111, 0.212] & $<$0.001 & 1.000 \\
- & mimo-v2.5 & 0.575 [0.506, 0.641] & 0.140 [0.099, 0.195] & 0.150 & 1.000 \\
- & deepseek-v4-flash & 0.780 [0.718, 0.832] & 0.145 [0.103, 0.201] & 0.004 & 0.239 \\
+\multirow{3}{*}{TR-MMLU} & GPT-5.6-luna & 0.860 [0.805, 0.901] & 0.155 [0.111, 0.212] & 0.734 & 0.819 & $<$0.001 & 1.000 \\
+ & mimo-v2.5 & 0.575 [0.506, 0.641] & 0.140 [0.099, 0.195] & 0.674 & 0.711 & 0.150 & 1.000 \\
+ & deepseek-v4-flash & 0.780 [0.718, 0.832] & 0.145 [0.103, 0.201] & 0.762 & 0.816 & 0.004 & 0.239 \\
 \midrule
-\multirow{3}{*}{TUMLU-tr} & GPT-5.6-luna & 0.885 [0.833, 0.922] & 0.096 [0.062, 0.144] & $<$0.001 & 0.040 \\
- & mimo-v2.5 & 0.365 [0.301, 0.434] & 0.111 [0.074, 0.162] & $<$0.001 & 1.000 \\
- & deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & $<$0.001 & 0.831 \\
+\multirow{3}{*}{TUMLU-tr} & GPT-5.6-luna & 0.885 [0.833, 0.922] & 0.096 [0.062, 0.144] & 0.775 & 0.865 & $<$0.001 & 0.040 \\
+ & mimo-v2.5 & 0.365 [0.301, 0.434] & 0.111 [0.074, 0.162] & 0.683 & 0.806 & $<$0.001 & 1.000 \\
+ & deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & 0.804 & 0.917 & $<$0.001 & 0.831 \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
@@ -153,17 +153,17 @@ Table~\ref{tab:qa} presents the two free-form QA benchmarks.
 \toprule
 \textbf{Benchmark} & \textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b Arm A acc.} & \textbf{M2b Arm C acc.} \\
 \midrule
-\multirow{3}{*}{Halluverse-M3-tr} & GPT-5.6-luna & 0.000 [0.000, 0.019] & 0.090 [0.058, 0.138] & 0.025 & --- \\
- & mimo-v2.5 & 0.000 [0.000, 0.019] & 0.085 [0.054, 0.132] & 0.045 & --- \\
- & deepseek-v4-flash & 0.000 [0.000, 0.019] & 0.110 [0.074, 0.161] & 0.055 & --- \\
+\multirow{3}{*}{Halluverse-M3-tr} & GPT-5.6-luna & 0.000 [0.000, 0.019] & 0.090 [0.058, 0.138] & 0.025 & N/A \\
+ & mimo-v2.5 & 0.000 [0.000, 0.019] & 0.085 [0.054, 0.132] & 0.045 & N/A \\
+ & deepseek-v4-flash & 0.000 [0.000, 0.019] & 0.110 [0.074, 0.161] & 0.055 & N/A \\
 \midrule
-\multirow{3}{*}{RAGTurk formal\_5k} & GPT-5.6-luna & 0.052 [0.028, 0.093] & --- & 0.080 & 0.000 \\
- & mimo-v2.5 & 0.030 [0.014, 0.064] & --- & 0.025 & 0.000 \\
- & deepseek-v4-flash & 0.070 [0.042, 0.114] & --- & 0.070 & 0.000 \\
+\multirow{3}{*}{RAGTurk formal\_5k} & GPT-5.6-luna & 0.052 [0.028, 0.093] & N/A & 0.080 & 0.000 \\
+ & mimo-v2.5 & 0.030 [0.014, 0.064] & N/A & 0.025 & 0.000 \\
+ & deepseek-v4-flash & 0.070 [0.042, 0.114] & N/A & 0.070 & 0.000 \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
-\caption{Free-form QA benchmark probe results. M2a is not applicable for RAGTurk (no MCQ structure). Arm C for RAGTurk is scored against machine-translated golds. Halluverse-M3-tr: --- for Arm C indicates QA-specific scoring.}
+\caption{Free-form QA benchmark probe results. M2a is not applicable for RAGTurk (no MCQ structure; marked N/A). Arm C for RAGTurk is scored against machine-translated golds (0 accuracy reflects QA scoring difficulty, not model failure). Halluverse-M3-tr has no Arm C accuracy in this view (N/A).}
 \label{tab:qa}
 \end{table*}
 
@@ -181,22 +181,22 @@ Table~\ref{tab:adjudication} presents the full adjudication across all 12 cells.
 \toprule
 \textbf{Benchmark} & \textbf{Model} & \textbf{RAW} & \textbf{M1-DISCOUNT} \\
 \midrule
-TR-MMLU & GPT-5.6-luna & --- & --- \\
-TR-MMLU & mimo-v2.5 & --- & --- \\
-TR-MMLU & deepseek-v4-flash & --- & --- \\
-TUMLU-tr & GPT-5.6-luna & --- & --- \\
-TUMLU-tr & mimo-v2.5 & --- & --- \\
-TUMLU-tr & deepseek-v4-flash & Flagged (2/3) & \textit{Flagged} (1/3) \\
-Halluverse-M3-tr & GPT-5.6-luna & --- & --- \\
-Halluverse-M3-tr & mimo-v2.5 & --- & --- \\
-Halluverse-M3-tr & deepseek-v4-flash & --- & --- \\
-RAGTurk formal\_5k & GPT-5.6-luna & --- & --- \\
-RAGTurk formal\_5k & mimo-v2.5 & --- & --- \\
-RAGTurk formal\_5k & deepseek-v4-flash & --- & --- \\
+TR-MMLU & GPT-5.6-luna & Not flagged & Not flagged \\
+TR-MMLU & mimo-v2.5 & Not flagged & Not flagged \\
+TR-MMLU & deepseek-v4-flash & Not flagged & Not flagged \\
+TUMLU-tr & GPT-5.6-luna & Not flagged & Not flagged \\
+TUMLU-tr & mimo-v2.5 & Not flagged & Not flagged \\
+TUMLU-tr & deepseek-v4-flash & Contaminated (2/3) & Not flagged (1/3) \\
+Halluverse-M3-tr & GPT-5.6-luna & Not flagged & Not flagged \\
+Halluverse-M3-tr & mimo-v2.5 & Not flagged & Not flagged \\
+Halluverse-M3-tr & deepseek-v4-flash & Not flagged & Not flagged \\
+RAGTurk formal\_5k & GPT-5.6-luna & Not flagged & Not flagged \\
+RAGTurk formal\_5k & mimo-v2.5 & Not flagged & Not flagged \\
+RAGTurk formal\_5k & deepseek-v4-flash & Not flagged & Not flagged \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
-\caption{Adjudication summary. --- = not flagged. Under M1-DISCOUNT, \textbf{0/12 cells flagged}; under RAW, \textbf{1/12 threshold-dependent}.}
+\caption{Adjudication summary. Under M1-DISCOUNT, \textbf{0/12 cells flagged}; under RAW, \textbf{1/12 (TUMLU-tr $\times$ deepseek-v4-flash) flagged}, reclassified as THRESHOLD-DEPENDENT under M1-DISCOUNT.}
 \label{tab:adjudication}
 \end{table*}
 

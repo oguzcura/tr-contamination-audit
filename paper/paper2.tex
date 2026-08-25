@@ -38,7 +38,7 @@ The trustworthiness of LLM leaderboards depends on a simple assumption: benchmar
 
 Contamination detection has become a major research thrust for English benchmarks. Geng et al. \cite{geng2022detecting} propose membership-inference-based detection; Mattern et al. \cite{mattern2023code} study data contamination in code LLMs; Liang et al. \cite{liang2024survey} survey the landscape of evaluation methodology threats. Yet the non-English evaluation ecosystem is growing faster than the auditing infrastructure that could validate it: new benchmarks for Turkish \cite{trmmu2024,tumlu2025}, Hindi \cite{indicmmlu2024}, Bangla \cite{mathshikkha2024}, and dozens of other languages appear on HuggingFace and arXiv without corresponding contamination audits.
 
-Turkish presents a particularly acute case. TR-MMLU \cite{trmmu2024} has been publicly available since December 2024 --- approximately 19 months of exposure to training-data collection pipelines --- and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards'' \cite{yildiz2025evaluating}. The 2025--2026 Turkish evaluation wave (TUMLU \cite{tumlu2025}, RAGTurk \cite{ragturk2026}, Halluverse-M3 \cite{halluverse2026}) adds four new benchmarks to the ecosystem, none audited for contamination. No contamination-audited Turkish benchmark exists as of this writing.
+Turkish presents a particularly acute case. TR-MMLU \cite{trmmu2024} has been publicly available since December 2024 --- approximately 19 months of exposure to training-data collection pipelines --- and a benchmark-quality audit already finds that ``70\% of the benchmark datasets fail to meet our heuristic quality standards'' \cite{yildiz2025evaluating}. The 2025--2026 Turkish evaluation wave (TUMLU \cite{tumlu2025}, RAGTurk \cite{ragturk2026}, Halluverse-M3 \cite{halluverse2026}) adds three new benchmarks to the ecosystem, none audited for contamination. No contamination-audited Turkish benchmark exists as of this writing.
 
 We address this gap with a pre-registered, API-only contamination audit that introduces two methodological contributions beyond its Turkish scope:
 
@@ -131,7 +131,7 @@ Three frontier models tested via the opencode-go API (black-box, no weight acces
 \midrule
 GPT-5.6-luna & OpenAI & \$0.348 & Subject model \\
 mimo-v2.5 & Xiaomi & \$0.000 (uncosted) & Subject model \\
-deepseek-v4-flash & DeepSeek & \$0.358 & Reference cohort \\
+deepseek-v4-flash & DeepSeek & \$0.358 & Subject model (fixed translator) \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
@@ -139,7 +139,7 @@ deepseek-v4-flash & DeepSeek & \$0.358 & Reference cohort \\
 \label{tab:models}
 \end{table*}
 
-DeepSeek serves as the reference model --- a publicly documented, widely-used model that provides baseline contamination signals for comparison.
+All three models are subject models under audit. deepseek-v4-flash additionally serves as the fixed back-translation engine for the M2b arm (per the pre-registration, lazy translation with caching), but it is audited identically to the other two on every benchmark.
 
 \subsection{Probe design}
 
@@ -193,13 +193,13 @@ The full audit completed with 13,193 logged API calls (planned 13,200; differenc
 \begin{table*}[t]
 \centering
 \begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccccc}
 \toprule
-\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
+\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B acc} & \textbf{M2b C acc} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
 \midrule
-GPT-5.6-luna & 0.860 [0.805, 0.901] & 0.155 [0.111, 0.212] & $<$0.001 & 1.000 \\
-mimo-v2.5 & 0.575 [0.506, 0.641] & 0.140 [0.099, 0.195] & 0.150 & 1.000 \\
-deepseek-v4-flash & 0.780 [0.718, 0.832] & 0.145 [0.103, 0.201] & 0.004 & 0.239 \\
+GPT-5.6-luna & 0.860 [0.805, 0.901] & 0.155 [0.111, 0.212] & 0.734 & 0.819 & $<$0.001 & 1.000 \\
+mimo-v2.5 & 0.575 [0.506, 0.641] & 0.140 [0.099, 0.195] & 0.674 & 0.711 & 0.150 & 1.000 \\
+deepseek-v4-flash & 0.780 [0.718, 0.832] & 0.145 [0.103, 0.201] & 0.762 & 0.816 & 0.004 & 0.239 \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
@@ -216,13 +216,13 @@ M1 verbatim rates are high for instruction-following models (expected --- M1 is 
 \begin{table*}[t]
 \centering
 \begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccccc}
 \toprule
-\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
+\textbf{Model} & \textbf{M1 verbatim rate} & \textbf{M2a flip rate} & \textbf{M2b B acc} & \textbf{M2b C acc} & \textbf{M2b B-vs-A $p$} & \textbf{M2b C-vs-A $p$} \\
 \midrule
-GPT-5.6-luna & 0.885 [0.833, 0.922] & 0.096 [0.062, 0.144] & $<$0.001 & 0.040 \\
-mimo-v2.5 & 0.365 [0.301, 0.434] & 0.111 [0.074, 0.162] & $<$0.001 & 1.000 \\
-deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & $<$0.001 & 0.831 \\
+GPT-5.6-luna & 0.885 [0.833, 0.922] & 0.096 [0.062, 0.144] & 0.775 & 0.865 & $<$0.001 & 0.040 \\
+mimo-v2.5 & 0.365 [0.301, 0.434] & 0.111 [0.074, 0.162] & 0.683 & 0.806 & $<$0.001 & 1.000 \\
+deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & 0.804 & 0.917 & $<$0.001 & 0.831 \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
@@ -230,9 +230,10 @@ deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & $<$0.001 & 0.8
 \label{tab:tumlu}
 \end{table*}
 
-TUMLU-tr shows the strongest M2b B-vs-A signals across all models --- all significant after Bonferroni. However, for GPT-5.6-luna and deepseek, C-vs-A is also significant or near-significant, suggesting general translation quality degradation rather than surface-specific fragility. For mimo-v2.5, C-vs-A is perfectly stable ($p=1.000$), but only 1/3 modalities indicates (M2b alone), which does not meet the $\geq$2/3 threshold.
+TUMLU-tr shows the strongest M2b B-vs-A signals across all models --- all significant after Bonferroni (Table~
+ef{tab:tumlu}, where we also report the pre-registered M2b arm accuracies B and C). Per the pre-registered indication rule (M2b indicates iff $B_\text{acc} < C_\text{acc} - 0.10$), only deepseek-v4-flash (B~0.804~<~C~0.917$-$0.10) and mimo-v2.5 (B~0.683~<~C~0.806$-$0.10) meet the criterion; GPT-5.6-luna does not (C-vs-A also degrades, $p{=}0.040$). For mimo-v2.5 the M2b indication is the sole indicating modality (1/3), which does not meet the $\geq$2/3 threshold. For deepseek-v4-flash, M1 verbatim (0.570) plus M2b give 2/3 modalities under RAW, but M1-DISCOUNT leaves only M2b (1/3), which fails the threshold.
 
-The critical cell: \textbf{deepseek-v4-flash $\times$ TUMLU-tr} reaches significance under RAW (M1 verbatim rate 0.570 + M2b B-vs-A $p<$0.001 = 2/3 modalities). Under M1-DISCOUNT, only M2b indicates (1/3), which fails the threshold.
+The critical cell: \textbf{deepseek-v4-flash $\times$ TUMLU-tr} is flagged \textbf{CONTAMINATED under the RAW reading} (M1 + M2b = 2/3 modalities, dynamic-arm $p{<}0.001$). Under M1-DISCOUNT, only M2b indicates (1/3), which fails the pre-registered $\geq$2/3 threshold, so the cell is reclassified as \textbf{THRESHOLD-DEPENDENT (M1-sensitive)} and is not reported as contaminated.
 
 \textbf{Adjudicated: THRESHOLD-DEPENDENT (M1-sensitive)} for deepseek-v4-flash; no significant contamination detected for GPT-5.6-luna and mimo-v2.5.
 
@@ -291,18 +292,18 @@ RAGTurk accuracies are lower bounds under the precision-first matcher (measured 
 \toprule
 \textbf{Benchmark} & \textbf{Model} & \textbf{RAW} & \textbf{M1-DISCOUNT} \\
 \midrule
-TR-MMLU & GPT-5.6-luna & --- & --- \\
-TR-MMLU & mimo-v2.5 & --- & --- \\
-TR-MMLU & deepseek-v4-flash & --- & --- \\
-TUMLU-tr & GPT-5.6-luna & --- & --- \\
-TUMLU-tr & mimo-v2.5 & --- & --- \\
-TUMLU-tr & deepseek-v4-flash & Flagged (2/3) & \textit{Flagged} (1/3) \\
-Halluverse-M3-tr & GPT-5.6-luna & --- & --- \\
-Halluverse-M3-tr & mimo-v2.5 & --- & --- \\
-Halluverse-M3-tr & deepseek-v4-flash & --- & --- \\
-RAGTurk formal\_5k & GPT-5.6-luna & --- & --- \\
-RAGTurk formal\_5k & mimo-v2.5 & --- & --- \\
-RAGTurk formal\_5k & deepseek-v4-flash & --- & --- \\
+TR-MMLU & GPT-5.6-luna & Not flagged & Not flagged \\
+TR-MMLU & mimo-v2.5 & Not flagged & Not flagged \\
+TR-MMLU & deepseek-v4-flash & Not flagged & Not flagged \\
+TUMLU-tr & GPT-5.6-luna & Not flagged & Not flagged \\
+TUMLU-tr & mimo-v2.5 & Not flagged & Not flagged \\
+TUMLU-tr & deepseek-v4-flash & Contaminated (2/3) & Not flagged (1/3) \\
+Halluverse-M3-tr & GPT-5.6-luna & Not flagged & Not flagged \\
+Halluverse-M3-tr & mimo-v2.5 & Not flagged & Not flagged \\
+Halluverse-M3-tr & deepseek-v4-flash & Not flagged & Not flagged \\
+RAGTurk formal\_5k & GPT-5.6-luna & Not flagged & Not flagged \\
+RAGTurk formal\_5k & mimo-v2.5 & Not flagged & Not flagged \\
+RAGTurk formal\_5k & deepseek-v4-flash & Not flagged & Not flagged \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}

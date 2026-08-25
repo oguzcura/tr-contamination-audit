@@ -6,4 +6,5 @@ dependencies = [
     "datasets[cli]>=5.0.1",
     "openai>=3.0.0",
     "pyarrow>=25.0.1",
+    "scipy>=1.17.1",
 ]

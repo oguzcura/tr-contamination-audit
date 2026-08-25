@@ -1,9 +1,19 @@
-.venv/
-__pycache__/
-*.pyc
-.DS_Store
+# Build artifacts (never commit)
+*.pdf
+*.out
 *.aux
 *.bbl
 *.blg
-*.out
 *.log
+*.synctex.gz
+paper/out/
+__pycache__/
+*.pyc
+
+# venvs
+.venv/
+venv/
+
+# local env
+.env
+.env.*
