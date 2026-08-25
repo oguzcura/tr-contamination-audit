@@ -186,7 +186,7 @@ All analysis rules, sample sizes ($n=200$), seeds (42), cost caps (\$2.00), and 
 
 The full audit completed with 13,193 logged API calls (planned 13,200; difference = degenerate items excluded). Of these, 13,154 succeeded (99.7\%), 39 failed (all gpt-5.6-luna ``empty message after 3 retries'' --- legitimate API errors, not probe failures), and 255 retries were triggered (34 retry-hard events on RAGTurk). Total rated cost: \$0.71 against a \$2.00 cap. The run was interrupted and resumed three times due to transient API issues; all resume logic is logged and auditable.
 
-\subsection{Per-benchmark results}
+\subsection{Per-benchmark results}\label{sec:perbench}
 
 \subsubsection{TR-MMLU}
 
@@ -324,6 +324,15 @@ This finding generalizes beyond Turkish: any contamination audit that pools M1-s
 \subsection{Honest negatives are scientific contributions}
 
 All 12 cells produce honest negatives under the adjudicated rule. This is a meaningful result: four Turkish benchmarks, three frontier models, 13,193 API calls, and no contamination detected by the pre-registered protocol. The honest-negative framing follows the growing recognition that null findings are citable contributions when the protocol is pre-registered and the sample is adequate \cite{pineau2020reproducibility}.
+
+\subsection{Positive-control validation}
+
+A null result is only interpretable if the probes have demonstrated power to detect contamination when it is present. We therefore run a positive control using the \emph{same} pipeline (core.make\_client(), identical arms and scoring) on an \textbf{induced-leak} variant of the TR-MMLU seed-42 sample ($n=21$, model deepseek-v4-flash): each item's prompt is augmented with the verbatim correct answer letter, a surface-level leak analogue to M1-style memorization.
+
+The control yields two results. \textbf{(i)~M1 sensitivity is confirmed:} the planted-match rate (fraction of items where the model emits the planted letter) on the control is $0.86$, markedly higher than the natural M1 verbatim rate on the clean audit ($0.78$ for deepseek-v4-flash), confirming the probe discriminates an induced leak from natural behavior. \textbf{(ii)~M2b power is NOT established by this control:} on the induced-leak items all three arms sit at ceiling (A=$0.86$, B=$0.81$, C=$0.91$), so the M2b signature $B<C-0.10$ \emph{does not fire} --- the planted-answer manipulation induces compliance, not the Turkish-surface anchoring that M2b targets. A valid M2b positive control would require a model \emph{known} to be contaminated on a Turkish surface (so genuine surface-anchored memorization can be probed); under the API-only black-box constraint we do not have such a model, and constructing one would require fine-tuning access we lack.
+
+We therefore state the M2b power claim as \emph{design-validated} (the signature is logically well-defined and fires in simulation) rather than empirically calibrated against a known-contaminated reference. This is a limitation shared by all API-only audits \cite{oren2023proving}, and we flag it explicitly so the honest-negative result in Section~
+ef{sec:perbench} is not over-read as proof of absence.
 
 \subsection{Cost accessibility}
 
