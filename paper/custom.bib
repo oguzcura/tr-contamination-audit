@@ -1,7 +1,10 @@
 % tr-contamination-audit bibliography.
-% Every entry VERIFIED live against arXiv / primary sources (2026-08-25):
-% each arXiv ID matches the paper's actual title + authors; no fabricated
-% title/author pairs, no placeholder [UNVERIFIED-ID] keys remain.
+% Every entry VERIFIED live against the arXiv export API (2026-09-03 fix round):
+% all 24 arXiv IDs re-fetched via http://export.arxiv.org/api/query?id_list=<id>;
+% titles and author lists written verbatim from the API records.
+% No fabricated title/author pairs, no placeholder [UNVERIFIED-ID] keys remain.
+% Keys kept stable for citation reuse (only mattern2023code renamed to
+% riddell2024code because the key named a different paper than the entry).
 
 @inproceedings{yang2024data,
   title={Investigating Data Contamination in Modern Benchmarks for Large Language Models},
@@ -18,7 +21,7 @@
 }
 
 @inproceedings{constat2024,
-  title={Con{S}tat: Measuring Non-Generalizing Performance in Contaminated LLM Benchmarks},
+  title={ConStat: Performance-Based Contamination Detection in Large Language Models},
   author={Dekoninck, Jasper and M{\"u}ller, Mark Niklas and Vechev, Martin},
   year={2024},
   booktitle={arXiv preprint arXiv:2405.16281},
@@ -26,63 +29,63 @@
 
 @inproceedings{geng2022detecting,
   title={Detecting Pretraining Data from Large Language Models},
-  author={Shi, Weijia and Ajith, Anirudh and Xia, Mengzhou and Huang, Yangsibo and Liu, Weijia and Zettlemoyer, Luke},
+  author={Shi, Weijia and Ajith, Anirudh and Xia, Mengzhou and Huang, Yangsibo and Liu, Daogao and Blevins, Terra and Chen, Danqi and Zettlemoyer, Luke},
   year={2023},
   booktitle={arXiv preprint arXiv:2310.16789},
 }
 
-@inproceedings{mattern2023code,
-  title={Quantifying Data Contamination in Code LLMs},
-  author={Mattern, Johannes and Mireshghallah, Fatemehsadat and others},
+@inproceedings{riddell2024code,
+  title={Quantifying Contamination in Evaluating Code Generation Capabilities of Language Models},
+  author={Riddell, Martin and Ni, Ansong and Cohan, Arman},
   year={2024},
   booktitle={arXiv preprint arXiv:2403.04811},
 }
 
 @inproceedings{liang2024survey,
-  title={Evaluating Large Language Models: A Survey},
-  author={Guo, Yue and others},
+  title={Evaluating Large Language Models: A Comprehensive Survey},
+  author={Guo, Zishan and Jin, Renren and Liu, Chuang and Huang, Yufei and Shi, Dan and Supryadi and Yu, Linhao and Liu, Yan and Li, Jiaxuan and Xiong, Bojian and Xiong, Deyi},
   year={2023},
   booktitle={arXiv preprint arXiv:2310.19736},
 }
 
 @inproceedings{trmmu2024,
-  title={{TR-MMLU}: A Turkish Benchmark for Evaluating Language Models},
-  author={\c{S}im\c{s}ek, Cihan and others},
+  title={Setting Standards in Turkish NLP: {TR-MMLU} for Large Language Model Evaluation},
+  author={Bayram, M. Ali and Fincan, Ali Arda and G{\"u}m{\"u}\c{s}, Ahmet Semih and Diri, Banu and Y{\i}ld{\i}r{\i}m, Sava\c{s} and Ayta\c{s}, {\"O}ner},
   year={2025},
   booktitle={arXiv preprint arXiv:2501.00593},
 }
 
 @inproceedings{tumlu2025,
-  title={{TUMLU}: A Unified Multilingual Benchmark for Evaluating Turkic Languages},
-  author={Barov, Zeynep and others},
+  title={{TUMLU}: A Unified and Native Language Understanding Benchmark for Turkic Languages},
+  author={Isbarov, Jafar and Akhundjanova, Arofat and Hajili, Mammad and Huseynova, Kavsar and Gaynullin, Dmitry and Rzayev, Anar and Tursun, Osman and Turdubaeva, Aizirek and Saetov, Ilshat and Kharisov, Rinat and Belginova, Saule and Kenbayeva, Ariana and Alisheva, Amina and K{\"o}ksal, Abdullatif and Rustamov, Samir and Ataman, Duygu},
   year={2025},
   booktitle={arXiv preprint arXiv:2502.11020},
 }
 
 @inproceedings{indicmmlu2024,
-  title={{IndicMMLU-Pro}: Benchmarking Indic Large Language Models},
-  author={Aggarwal, Divyanshu and Gupta, Vivek and Kunchukuttan, Anoop},
+  title={{IndicMMLU-Pro}: Benchmarking Indic Large Language Models on Multi-Task Language Understanding},
+  author={KJ, Sankalp and Kumar, Ashutosh and Balaji, Laxmaan and Kotecha, Nikunj and Jain, Vinija and Chadha, Aman and Bhaduri, Sreyoshi},
   year={2025},
   booktitle={arXiv preprint arXiv:2501.15747},
 }
 
 @inproceedings{mathshikkha2024,
   title={{MathShikkha}: A Controlled Study of Answer-Only and Chain-of-Thought Supervision for Bangla Mathematical Reasoning in Small Language Models},
-  author={Rahman, Md and others},
+  author={Ali, Rahma Simin and Hossain, Jawad},
   year={2026},
   booktitle={arXiv preprint arXiv:2608.08503},
 }
 
 @inproceedings{ragturk2026,
-  title={{RAGTurk}: A Turkish Retrieval-Augmented Generation Benchmark},
-  author={METU NLP},
+  title={{RAGTurk}: Best Practices for Retrieval Augmented Generation in Turkish},
+  author={K{\"o}se, S{\"u}ha Ka\u{g}an and Baytekin, Mehmet Can and Akta\c{s}, Burak and G{\"o}r{\"u}r, Bilge Kaan and Munis, Evren Ayberk and Y{\i}lmaz, Deniz and Kartal, Muhammed Yusuf and Toraman, \c{C}a\u{g}r{\i}},
   year={2026},
   booktitle={arXiv preprint arXiv:2602.03652},
 }
 
 @inproceedings{halluverse2026,
-  title={{Halluverse-M3}: A Multilingual Hallucination Benchmark},
-  author={Dal{\u{g}}ar, Emine and others},
+  title={{Halluverse-M\textsuperscript{3}}: A Multitask Multilingual Benchmark for Hallucination in LLMs},
+  author={Abdaljalil, Samir and Sharma, Parichit and Serpedin, Erchin and Kurban, Hasan},
   year={2026},
   booktitle={arXiv preprint arXiv:2602.06920},
 }
@@ -96,14 +99,14 @@
 
 @inproceedings{oren2023proving,
   title={Proving Test Set Contamination in Black Box Language Models},
-  author={Oren, Yoav and Meister, Nicole and Chatterji, Niladri and Ladhak, Faisal and Hashimoto, Tatsunori},
+  author={Oren, Yonatan and Meister, Nicole and Chatterji, Niladri and Ladhak, Faisal and Hashimoto, Tatsunori B.},
   year={2024},
   booktitle={arXiv preprint arXiv:2310.17623},
 }
 
 @inproceedings{zhang2025test,
   title={Test of Time: Rethinking Temporal Signal of Benchmark Contamination},
-  author={Zhang, Haoyang and others},
+  author={Zhang, Terry Jingchen and Dev, Gopal and Wang, Ning and Obreiter, Max and Pandey, Punya Syon and Samway, Keenan and Jiang, Wenyuan and Huang, Yinya and Sch{\"o}lkopf, Bernhard and Sachan, Mrinmaya and Jin, Zhijing},
   year={2025},
   booktitle={arXiv preprint arXiv:2509.00072},
 }
@@ -123,14 +126,14 @@
 }
 
 @inproceedings{beyondbench2025,
-  title={Beyond Benchmarks: Threats to Evaluation in the LLM Era},
+  title={BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models},
   author={Srivastava, Gaurav and Hussain, Aafiya and Bi, Zhenyu and Roy, Swastik and Pitre, Priya and Lu, Meng and Ziyadi, Morteza and Wang, Xuan},
   year={2025},
   booktitle={arXiv preprint arXiv:2509.24210},
 }
 
 @inproceedings{lingoly2024,
-  title={{LINGOly}: Benchmarking Language Models across 44 Languages},
+  title={{LINGOLY}: A Benchmark of Olympiad-Level Linguistic Reasoning Puzzles in Low-Resource and Extinct Languages},
   author={Bean, Andrew M. and Hellsten, Simi and Mayne, Harry and Magomere, Jabez and Chi, Ethan A. and Chi, Ryan and Hale, Scott A. and Kirk, Hannah Rose},
   year={2024},
   booktitle={arXiv preprint arXiv:2406.06196},
@@ -138,7 +141,7 @@
 
 @inproceedings{turkembed2025,
   title={{TurkEmbed4Retrieval}: Turkish Embedding Model for Retrieval},
-  author={Ezerceli, {\"O}zay and G{\"u}m{\"u}{\c s}{\c c}eki{\c c}i, Gizem and Erko{\c c}, Tu{\u g}ba and {\"O}zen{\c c}, Berke},
+  author={Ezerceli, {\"O}zay and G{\"u}m{\"u}\c{s}\c{c}eki\c{c}i, Gizem and Erko\c{c}, Tu\u{g}ba and {\"O}zen\c{c}, Berke},
   year={2025},
   booktitle={arXiv preprint arXiv:2511.07595},
 }
@@ -159,21 +162,21 @@
 
 @inproceedings{sanchz2025mcq,
   title={None of the Others: a General Technique to Distinguish Reasoning from Memorization in Multiple-Choice LLM Evaluation Benchmarks},
-  author={S{\'a}nchez Salido, Jos{\'e} Francisco and others},
+  author={S{\'a}nchez Salido, Eva and Gonzalo, Julio and Marco, Guillermo},
   year={2025},
   booktitle={arXiv preprint arXiv:2502.12896},
 }
 
 @inproceedings{abbas2026obscuring,
   title={Obscuring Data Contamination Through Translation: Evidence from Arabic Corpora},
-  author={Abbas, Tameem and others},
+  author={Abbas, Chaymaa and Shamaa, Nour and Awad, Mariette},
   year={2026},
   booktitle={arXiv preprint arXiv:2601.14994},
 }
 
 @inproceedings{yildiz2025evaluating,
   title={Evaluating the Quality of Benchmark Datasets for Low-Resource Languages: A Case Study on Turkish},
-  author={Erdem, Naime \c{S}eyma and Aytan, Burak and Topraksoy, Abdullah and Toraman, Cagri and Cengiz, Ay\c{s}e Aysu},
+  author={Cengiz, Ay\c{s}e Aysu and Sever, Ahmet Kaan and {\"U}m{\"u}tl{\"u}, Elif Ecem and Erdem, Naime \c{S}eyma and Aytan, Burak and Tufan, B{\"u}\c{s}ra and Topraksoy, Abdullah and Dar{\i}c{\i}, Esra and Toraman, Cagri},
   year={2025},
   booktitle={arXiv preprint arXiv:2504.09714},
 }
