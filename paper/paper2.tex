@@ -13,6 +13,8 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{url}
+\hypersetup{pdftitle={Contamination Signals, Not Verdicts: A Pre-Registered Multi-Probe Audit of Turkish LLM Benchmarks with a Threshold-Sensitivity Protocol},
+            pdfauthor={Oğuz Emre Cura}}
 
 \title{Contamination Signals, Not Verdicts: A Pre-Registered Multi-Probe Audit of Turkish LLM Benchmarks with a Threshold-Sensitivity Protocol}
 
@@ -49,7 +51,7 @@ We address this gap with a pre-registered, API-only contamination audit that int
 
 Our audit covers four Turkish benchmarks $\times$ three frontier models $\times$ three probe types, producing 13,193 API calls at \$0.71 total cost --- demonstrating that rigorous contamination auditing is accessible without large compute budgets.
 
-Unlike single-probe perturbation audits \\cite{sanchz2025mcq,fragilereasoning2025,contamdetect2024}, our contribution is the \emph{reporting protocol} as much as the probes: every benchmark$\times$model cell is disclosed (not only flagged ones), each carries a RAW vs.\ M1-DISCOUNT reading so instruction-following confounds cannot masquerade as contamination, and cells with no detected signal are reported as citable honest negatives under a pre-registered decision rule. This makes the audit falsifiable and reproducible rather than a binary ``contaminated / clean'' verdict on a single signal.
+Unlike single-probe perturbation audits \cite{sanchz2025mcq,fragilereasoning2025,contamdetect2024}, our contribution is the \emph{reporting protocol} as much as the probes: every benchmark$\times$model cell is disclosed (not only flagged ones), each carries a RAW vs.\ M1-DISCOUNT reading so instruction-following confounds cannot masquerade as contamination, and cells with no detected signal are reported as citable honest negatives under a pre-registered decision rule. This makes the audit falsifiable and reproducible rather than a binary ``contaminated / clean'' verdict on a single signal.
 
 \section{Related Work}
 
@@ -120,7 +122,7 @@ TR-MMLU's key is near-uniform, so no static positional prior threatens its cells
 
 \subsection{Models}
 
-Three frontier models tested via the opencode-go API (black-box, no weight access):
+Three frontier models, tested via the opencode-go API (the OpenCode Zen model gateway, accessed through an OpenAI-compatible endpoint; black-box, no weight access):
 
 \begin{table*}[t]
 \centering
@@ -178,13 +180,13 @@ The M1-DISCOUNT reading is the \textbf{adjudicated} call. Cells flagged by RAW b
 
 \subsection{Pre-registration}
 
-All analysis rules, sample sizes ($n=200$), seeds (42), cost caps (\$2.00), and consensus thresholds were frozen in a pre-registration document before any API calls. The pre-registration is published alongside this paper. The four user-mandated fixes (M1-discount sensitivity, retry-harder for gpt-5.6-luna on RAGTurk, answer-form-robust RAGTurk scoring, cost cap and spend logging) were approved and frozen before the run.
+All analysis rules, sample sizes ($n=200$), seeds (42), cost caps (\$2.00), and consensus thresholds were frozen in a pre-registration document before any API calls. The pre-registration is published alongside this paper. Four protocol amendments, frozen before the run, governed the audit: M1-discount sensitivity adjudication, an expanded retry budget for gpt-5.6-luna on RAGTurk, answer-form-robust RAGTurk scoring, and cost cap with spend logging.
 
 \section{Results}
 
 \subsection{Run reliability}
 
-The full audit completed with 13,193 logged API calls (planned 13,200; difference = degenerate items excluded). Of these, 13,154 succeeded (99.7\%), 39 failed (all gpt-5.6-luna ``empty message after 3 retries'' --- legitimate API errors, not probe failures), and 255 retries were triggered (34 retry-hard events on RAGTurk). Total rated cost: \$0.71 against a \$2.00 cap. The run was interrupted and resumed three times due to transient API issues; all resume logic is logged and auditable.
+The full audit completed with 13,193 logged API calls (planned 13,200; difference = degenerate items excluded). Of these, 13,154 succeeded (99.7\%), 39 failed (all gpt-5.6-luna ``empty message after 3 retries'' --- legitimate API errors, not probe failures), and 255 retries were triggered (34 of them re-queried with an expanded budget on RAGTurk). Total rated cost: \$0.71 against a \$2.00 cap. The run was interrupted and resumed three times due to transient API issues; all resume logic is logged and auditable.
 
 \subsection{Per-benchmark results}\label{sec:perbench}
 
@@ -360,7 +362,7 @@ The total audit cost of \$0.71 demonstrates that rigorous contamination auditing
 
 \section{Conclusion}
 
-We present the first multi-probe contamination audit of the Turkish LLM evaluation ecosystem, covering four benchmarks $\times$ three models with a pre-registered threshold-sensitivity protocol. Under the adjudicated M1-DISCOUNT rule, no contamination is detected in any of the 12 benchmark $\times$ model cells. One cell reaches significance under RAW but is reclassified as threshold-dependent, demonstrating the importance of sensitivity analysis in contamination auditing.
+We present, to our knowledge, the first multi-probe contamination audit of the Turkish LLM evaluation ecosystem, covering four benchmarks $\times$ three models with a pre-registered threshold-sensitivity protocol. Under the adjudicated M1-DISCOUNT rule, no contamination is detected in any of the 12 benchmark $\times$ model cells. One cell reaches significance under RAW but is reclassified as threshold-dependent, demonstrating the importance of sensitivity analysis in contamination auditing.
 
 The methodological contribution --- the RAW + M1-DISCOUNT dual-reporting convention --- generalizes beyond Turkish to any contamination audit that pools verbatim-recall signals with dynamic-arm signals. We release all data, code, and pre-registration artifacts for reproducibility and encourage the community to adopt multi-probe consensus auditing as standard practice for non-English benchmark validation.
 
@@ -396,7 +398,7 @@ Table~\ref{tab:lenient} reports the lenient-matcher sensitivity analysis for the
 \midrule
 GPT-5.6-luna & 0.080 & 0.134 & 0.070 & 0.091 & 0.000 & 0.000 \\
 mimo-v2.5 & 0.025 & 0.035 & 0.040 & 0.065 & 0.000 & 0.000 \\
-DeepSeek-v4-flash & 0.070 & 0.090 & 0.060 & 0.080 & 0.000 & 0.000 \\
+deepseek-v4-flash & 0.070 & 0.090 & 0.060 & 0.080 & 0.000 & 0.000 \\
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
@@ -415,7 +417,7 @@ DeepSeek-v4-flash & 0.070 & 0.090 & 0.060 & 0.080 & 0.000 & 0.000 \\
 \midrule
 GPT-5.6-luna & 3,798 & 3,759 & 39 & 255 & \$0.348 \\
 mimo-v2.5 & 3,798 & 3,798 & 0 & 0 & \$0.000 \\
-DeepSeek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
+deepseek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
 \midrule
 \textbf{TOTAL} & \textbf{13,193} & \textbf{13,154} & \textbf{39} & \textbf{255} & \textbf{\$0.707} \\
 \bottomrule
@@ -425,9 +427,9 @@ DeepSeek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
 \label{tab:spend}
 \end{table*}
 
-26 spend checkpoints logged; no cost cap breach. Total project spend including preparatory smoke/pilot runs: \$0.89 (gpt-5.6-luna \$0.43, deepseek-v4-flash \$0.45, mimo-v2.5 uncosted).
+26 spend checkpoints logged; no cost cap breach. Total project spend including preparatory smoke/pilot runs: \$0.89 (gpt-5.6-luna \$0.43, deepseek-v4-flash \$0.45, mimo-v2.5 uncosted; per-model figures are rounded).
 
-\section*{References}
+\clearpage
 
 \bibliographystyle{acl_natbib}
 \bibliography{custom}

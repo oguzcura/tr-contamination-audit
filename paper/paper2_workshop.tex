@@ -13,6 +13,8 @@
 \usepackage{multirow}
 \usepackage{amsmath}
 \usepackage{url}
+\hypersetup{pdftitle={Contamination Signals, Not Verdicts: A Pre-Registered Multi-Probe Audit of Turkish LLM Benchmarks with a Threshold-Sensitivity Protocol},
+            pdfauthor={Anonymous}}
 
 \title{Contamination Signals, Not Verdicts: A Pre-Registered Multi-Probe Audit of Turkish LLM Benchmarks with a Threshold-Sensitivity Protocol}
 
@@ -50,7 +52,7 @@ Our audit covers four Turkish benchmarks $\times$ three frontier models $\times$
 \section{Method}
 
 \subsection{Benchmarks and Models}
-We audit four Turkish LLM evaluation benchmarks (Table~\ref{tab:benchmarks}) across three frontier models tested via the opencode-go API (Table~\ref{tab:models}).
+We audit four Turkish LLM evaluation benchmarks (Table~\ref{tab:benchmarks}) across three frontier models (Table~\ref{tab:models}), tested via the opencode-go API --- the OpenCode Zen model gateway, an OpenAI-compatible commercial endpoint.
 
 \begin{table*}[t]
 \centering
@@ -130,7 +132,7 @@ Table~\ref{tab:mcq} presents combined results for the two MCQ benchmarks.
 \bottomrule
 \end{tabular}%
 \end{adjustbox}
-\caption{MCQ benchmark probe results. TR-MMLU: M2b B-vs-A is significant for GPT-5.6-luna and deepseek, but C-vs-A is not---pattern is back-translation noise, not surface-anchored memorization. TUMLU-tr: all models show significant M2b B-vs-A. GPT-5.6-luna also drops on C-vs-A ($p$=0.040), consistent with general translation degradation; mimo-v2.5 and deepseek-v4-flash instead show the B-collapse/C-stable signature (C-vs-A $p$=1.000 / 0.831).}
+\caption{MCQ benchmark probe results. Per-benchmark interpretation and adjudication appear in the Results text.}
 \label{tab:mcq}
 \end{table*}
 
@@ -213,6 +215,9 @@ RAGTurk formal\_5k & deepseek-v4-flash & Not flagged & Not flagged \\
 We present, to our knowledge, the first multi-probe contamination audit of the Turkish LLM evaluation ecosystem (systematic literature search through August 2026). Under M1-DISCOUNT, no contamination is detected in any of the 12 cells. The RAW + M1-DISCOUNT dual-reporting convention generalizes beyond Turkish to any contamination audit pooling verbatim-recall signals with dynamic-arm signals. We release all data, code, and pre-registration artifacts for reproducibility.
 
 \section*{Appendix: Spend Log}
+
+26 spend checkpoints logged; no cost cap breach. Per-model calls, retries, and rated cost appear in Table~\ref{tab:spend}; per-model figures are rounded.
+
 \begin{table*}[t]
 \centering
 \begin{adjustbox}{max width=\textwidth}
@@ -222,7 +227,7 @@ We present, to our knowledge, the first multi-probe contamination audit of the T
 \midrule
 GPT-5.6-luna & 3,798 & 3,759 & 39 & 255 & \$0.348 \\
 mimo-v2.5 & 3,798 & 3,798 & 0 & 0 & \$0.000 \\
-DeepSeek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
+deepseek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
 \midrule
 \textbf{TOTAL} & \textbf{13,193} & \textbf{13,154} & \textbf{39} & \textbf{255} & \textbf{\$0.707} \\
 \bottomrule
@@ -232,7 +237,7 @@ DeepSeek-v4-flash & 5,597 & 5,597 & 0 & 0 & \$0.358 \\
 \label{tab:spend}
 \end{table*}
 
-\section*{References}
+\clearpage
 \bibliographystyle{acl_natbib}
 \bibliography{custom}
 
