@@ -230,8 +230,7 @@ deepseek-v4-flash & 0.570 [0.501, 0.637] & 0.111 [0.074, 0.162] & 0.804 & 0.917 
 \label{tab:tumlu}
 \end{table*}
 
-TUMLU-tr shows the strongest M2b B-vs-A signals across all models --- all significant after Bonferroni (Table~
-ef{tab:tumlu}, where we also report the pre-registered M2b arm accuracies B and C). Per the pre-registered indication rule (M2b indicates iff $B_\text{acc} < C_\text{acc} - 0.10$), only deepseek-v4-flash (B~0.804~<~C~0.917$-$0.10) and mimo-v2.5 (B~0.683~<~C~0.806$-$0.10) meet the criterion; GPT-5.6-luna does not (C-vs-A also degrades, $p{=}0.040$). For mimo-v2.5 the M2b indication is the sole indicating modality (1/3), which does not meet the $\geq$2/3 threshold. For deepseek-v4-flash, M1 verbatim (0.570) plus M2b give 2/3 modalities under RAW, but M1-DISCOUNT leaves only M2b (1/3), which fails the threshold.
+TUMLU-tr shows the strongest M2b B-vs-A signals across all models --- all significant after Bonferroni (Table~\ref{tab:tumlu}, where we also report the pre-registered M2b arm accuracies B and C). Per the pre-registered indication rule (M2b indicates iff $B_\text{acc} < C_\text{acc} - 0.10$), only deepseek-v4-flash (B~0.804~<~C~0.917$-$0.10) and mimo-v2.5 (B~0.683~<~C~0.806$-$0.10) meet the criterion; GPT-5.6-luna does not (C-vs-A also degrades, $p{=}0.040$). For mimo-v2.5 the M2b indication is the sole indicating modality (1/3), which does not meet the $\geq$2/3 threshold. For deepseek-v4-flash, M1 verbatim (0.570) plus M2b give 2/3 modalities under RAW, but M1-DISCOUNT leaves only M2b (1/3), which fails the threshold.
 
 The critical cell: \textbf{deepseek-v4-flash $\times$ TUMLU-tr} is flagged \textbf{CONTAMINATED under the RAW reading} (M1 + M2b = 2/3 modalities, dynamic-arm $p{<}0.001$). Under M1-DISCOUNT, only M2b indicates (1/3), which fails the pre-registered $\geq$2/3 threshold, so the cell is reclassified as \textbf{THRESHOLD-DEPENDENT (M1-sensitive)} and is not reported as contaminated.
 
@@ -331,8 +330,7 @@ A null result is only interpretable if the probes have demonstrated power to det
 
 The control yields two results. \textbf{(i)~M1 sensitivity is confirmed:} the planted-match rate (fraction of items where the model emits the planted letter) on the control is $0.86$, markedly higher than the natural M1 verbatim rate on the clean audit ($0.78$ for deepseek-v4-flash), confirming the probe discriminates an induced leak from natural behavior. \textbf{(ii)~M2b power is NOT established by this control:} on the induced-leak items all three arms sit at ceiling (A=$0.86$, B=$0.81$, C=$0.90$), so the M2b signature $B<C-0.10$ \emph{does not fire} --- the planted-answer manipulation induces compliance, not the Turkish-surface anchoring that M2b targets. A valid M2b positive control would require a model \emph{known} to be contaminated on a Turkish surface (so genuine surface-anchored memorization can be probed); under the API-only black-box constraint we do not have such a model, and constructing one would require fine-tuning access we lack.
 
-We therefore state the M2b power claim as \emph{design-validated} (the signature is logically well-defined and fires in simulation) rather than empirically calibrated against a known-contaminated reference. This is a limitation shared by all API-only audits \cite{oren2023proving}, and we flag it explicitly so the honest-negative result in Section~
-ef{sec:perbench} is not over-read as proof of absence.
+We therefore state the M2b power claim as \emph{design-validated} (the signature is logically well-defined and fires in simulation) rather than empirically calibrated against a known-contaminated reference. This is a limitation shared by all API-only audits \cite{oren2023proving}, and we flag it explicitly so the honest-negative result in Section~\ref{sec:perbench} is not over-read as proof of absence.
 
 \subsection{Cost accessibility}
 
@@ -347,7 +345,7 @@ The total audit cost of \$0.71 demonstrates that rigorous contamination auditing
 
 \item \textbf{QA semantic matching.} The RAGTurk matcher is precision-first (1.000 precision, 0.371 recall on 106 labeled pairs). This means every RAGTurk accuracy is a conservative lower bound --- true contamination could be higher than detected. A lenient sensitivity variant is reported per arm but not used as headline. The matcher's low recall is a disclosed limitation, not a flaw: false positives would corrupt the fragility contrast.
 
-\item \textbf{Sample size.} $n=200$ per benchmark $\times$ model is a sample, not the full benchmark. Results generalize to the seed-42 matched subsets. Larger samples would narrow confidence intervals and potentially resolve cells where Bonferroni correction pushes borderline $p$-values above threshold (e.g., RAGTurk deepseek B-vs-A $p=0.022$ before correction).
+\item \textbf{Sample size.} $n=200$ per benchmark $\times$ model is a sample, not the full benchmark. Results generalize to the seed-42 matched subsets. Larger samples would narrow confidence intervals and potentially resolve cells where Bonferroni correction pushes borderline $p$-values above threshold (e.g., Halluverse GPT-5.6-luna M2b C-vs-B: $p{=}0.0063$ raw but $0.057$ after Bonferroni).
 
 \item \textbf{Translation noise.} RAGTurk Arm C golds are machine-translated (single pass, deepseek-v4-flash). Translation error propagates into C scoring, potentially deflating C accuracy and creating artificial fragility signals. Human-translated golds would eliminate this confound.
 
