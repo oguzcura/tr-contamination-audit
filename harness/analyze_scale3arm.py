@@ -1,9 +1,10 @@
 """Analyze scaled n=200 matched 3-arm run: accuracy, Wilson CI, McNemar."""
-import json, re
+import json, os, re
 from math import sqrt
 from scipy import stats
 
-IN = r"C:\Users\oguzc\ai-team\research\harness\results\scale3arm.jsonl"
+HERE = os.path.dirname(os.path.abspath(__file__))
+IN = os.path.join(HERE, "results", "scale3arm.jsonl")
 
 def parse_letter(raw):
     if not raw: return None

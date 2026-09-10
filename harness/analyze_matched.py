@@ -1,9 +1,10 @@
 """Matched 3-arm comparison: only items parsed in ALL of BB / B / C."""
-import json, re, random
+import json, os, re, random
 from datasets import load_dataset
 
-BASE = r"C:\Users\oguzc\ai-team\research\harness\results\pilot.jsonl"               # 100
-BC   = r"C:\Users\oguzc\ai-team\research\harness\results\pilot_backtrans_bc.jsonl"  # 30
+HERE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.join(HERE, "results", "pilot.jsonl")                # 100
+BC   = os.path.join(HERE, "results", "pilot_backtrans_bc.jsonl")   # 30
 
 ds = list(load_dataset("alibayram/turkish_mmlu", split="mmlu"))
 rng = random.Random(42); sample100 = rng.sample(ds, min(100, len(ds)))

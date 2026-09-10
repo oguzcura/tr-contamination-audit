@@ -61,7 +61,7 @@ Recent work has moved toward multi-signal approaches. Ahuja et al. \cite{contamm
 
 \subsection{Non-English benchmark auditing}
 
-The Bangla MathShikkha audit \cite{mathshikkha2024} establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks \cite{beyondbench2025} surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly \cite{lingoly2024} audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU \cite{trmmu2024} introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit \cite{yildiz2025evaluating} documented structural weaknesses but not training-data leakage. Cengiz et al. \cite{yildiz2025evaluating} evaluated quality across 17 Turkish benchmarks, finding structural and cultural issues that compound contamination risk. TurkEmbed \cite{turkembed2025} and related work build Turkish-specific NLP infrastructure without addressing contamination concerns. In cross-lingual contamination, Abbas et al. \cite{abbas2026obscuring} showed that translation suppresses conventional contamination indicators in Arabic corpora --- our M2b probe's 3-arm design (TR original $\rightarrow$ back-translation $\rightarrow$ EN direct) extends this insight to Turkish.
+The Bangla MathShikkha audit \cite{mathshikkha2024} establishes that contamination auditing is accepted and valued for non-English benchmarks. Beyond Benchmarks \cite{beyondbench2025} surveys threats to evaluation across languages, documenting how English-centric assumptions fail for typologically diverse languages. LINGOly \cite{lingoly2024} audits multilingual LLMs across 44 languages, finding systematic performance disparities. For Turkish specifically, TR-MMLU \cite{trmmu2024} introduced the benchmark but did not include contamination auditing; the TR-MMLU quality audit \cite{yildiz2025evaluating} documented structural weaknesses but not training-data leakage. Cengiz et al. \cite{yildiz2025evaluating} evaluated quality across 17 Turkish benchmarks, finding structural and cultural issues that compound contamination risk. TurkEmbed \cite{turkembed2025} and related work build Turkish-specific NLP infrastructure without addressing contamination concerns. In cross-lingual contamination, Abbas et al. \cite{abbas2026obscuring} showed that translation suppresses conventional contamination indicators in Arabic corpora --- our M2b probe's 3-arm design (TR original $\rightarrow$ back-translation $\rightarrow$ EN direct) extends this insight to Turkish. Tan et al. \cite{florence2026} show that machine-translation contamination is itself cross-directional --- training on FLORES translations artificially boosts unseen translation directions via target-side memorization, and recall of memorized references persists under source-side perturbations --- reinforcing our M2b design principle that contamination must be probed across surface forms (original, back-translated, and English-direct arms) rather than in a single rendering.
 
 \subsection{Pre-registration and evaluation methodology}
 
@@ -158,7 +158,7 @@ Three independent probe modalities, each targeting a different contamination sig
 
 The contamination signature is \textbf{B collapses while C stays stable} --- the model is anchored to the memorized Turkish surface rather than the underlying concept. This operationalizes ConStat's ``non-generalizing performance'' \cite{constat2024} and our pre-registered M2b\_A/B/C arm design. Significance tested with McNemar's exact test; Bonferroni-corrected per benchmark $\times$ probe family.
 
-For RAGTurk (free-form QA, no MCQ structure), M2a is not applicable (no distractors to flip). Arm C is scored against machine-translated gold answers (deepseek-v4-flash, single pass, logged and cached).
+For the free-form QA benchmarks, M2a is adapted to the item format. For Halluverse-M3-tr, M2a converts each item into a forced two-option format: the gold answer and the dataset's own ``edited answer'' --- a hallucination-edit twin of the gold --- are presented as options A/B with per-item randomized order, and the model's response is parsed to a letter with the same robust parser as the MCQ arms; choosing the edited option counts as flip-following. The paired McNemar contrast against the unmodified free-form baseline is structure-sensitive here: items the model misses free-form are often rescued by the two-option format, so for Halluverse the interpretable M2a signal is the flip-follow rate, which stays far below the random 0.5 two-option baseline. For RAGTurk (free-form QA with no options at all), M2a is not applicable (no distractors to flip). Arm C is scored against machine-translated gold answers (deepseek-v4-flash, single pass, logged and cached).
 
 \subsection{Consensus and adjudication}
 
@@ -379,9 +379,32 @@ The full pre-registration document is published alongside this paper. Key elemen
 
 \subsection*{Appendix B: Matcher documentation (RAGTurk fix 3)}
 
-The RAGTurk QA matcher uses a precision-first cascade: empty guard $\rightarrow$ letter-form $\rightarrow$ exact match $\rightarrow$ number guard $\rightarrow$ containment $\rightarrow$ paraphrase $\rightarrow$ long-descriptive. Measured on 106 hand-labeled pilot pairs: precision 1.000, recall 0.371, accuracy 0.792. The deliberate low recall means every RAGTurk accuracy is a conservative lower bound. A lenient sensitivity variant (no content-token guard) is logged per call and reported as a sensitivity column for RAGTurk only.
+The RAGTurk QA matcher uses a precision-first cascade: empty guard $\rightarrow$ letter-form $\rightarrow$ exact match $\rightarrow$ number guard $\rightarrow$ containment $\rightarrow$ paraphrase $\rightarrow$ long-descriptive. Measured on 106 hand-labeled pilot pairs: precision 1.000, recall 0.371, accuracy 0.792. The deliberate low recall means every RAGTurk accuracy is a conservative lower bound. A lenient sensitivity variant (no content-token guard) is logged per call and reported as a sensitivity column in Appendix~C (RAGTurk only).
 
-\subsection*{Appendix C: Spend log summary}
+\subsection*{Appendix C: Lenient-matcher sensitivity (RAGTurk)}
+
+Table~\ref{tab:lenient} reports the lenient-matcher sensitivity analysis for the RAGTurk formal\_5k cells: the lenient variant (no content-token guard) trades the precision-first matcher's 1.000 precision for higher recall, so lenient accuracies are expected to be higher than the strict accuracies reported in Table~\ref{tab:ragturk} and are not used as headline. Both variants are computed on the fully matched denominator ($n{=}187$ for GPT-5.6-luna; $n{=}200$ for the other models) and every cell is reported --- no cell is hidden. Arm C scores 0.000 under both variants for all three models, so the fragility contrast is unaffected by the matcher choice; no verdict changes under the lenient reading.
+
+\begin{table*}[t]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{2}{c}{\textbf{Arm A (original TR)}} & \multicolumn{2}{c}{\textbf{Arm B (back-translated)}} & \multicolumn{2}{c}{\textbf{Arm C (English-direct)}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+\textbf{Model} & Strict & Lenient & Strict & Lenient & Strict & Lenient \\
+\midrule
+GPT-5.6-luna & 0.080 & 0.134 & 0.070 & 0.091 & 0.000 & 0.000 \\
+mimo-v2.5 & 0.025 & 0.035 & 0.040 & 0.065 & 0.000 & 0.000 \\
+DeepSeek-v4-flash & 0.070 & 0.090 & 0.060 & 0.080 & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}%
+\end{adjustbox}
+\caption{RAGTurk formal\_5k M2b per-arm accuracy under the strict (precision-first) and lenient (no content-token guard) matcher variants, three arms per model. Source: \texttt{full\_stats\_2026-08-16.json}, \texttt{cells/ragturk\_formal5k|<model>/M2b} (arms and \texttt{lenient\_sensitivity}).}
+\label{tab:lenient}
+\end{table*}
+
+\subsection*{Appendix D: Spend log summary}
 
 \begin{table*}[t]
 \centering

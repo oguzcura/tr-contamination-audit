@@ -1,10 +1,11 @@
 """Compare Black Box vs Choice-Substitution per question (same seed-42 sample)."""
-import json, random, re
+import json, os, random, re
 from collections import defaultdict
 from datasets import load_dataset
 
-BB  = r"C:\Users\oguzc\ai-team\research\harness\results\pilot.jsonl"
-CS  = r"C:\Users\oguzc\ai-team\research\harness\results\pilot_choicesub.jsonl"
+HERE = os.path.dirname(os.path.abspath(__file__))
+BB   = os.path.join(HERE, "results", "pilot.jsonl")
+CS   = os.path.join(HERE, "results", "pilot_choicesub.jsonl")
 N   = 100
 
 ds = list(load_dataset("alibayram/turkish_mmlu", split="mmlu"))

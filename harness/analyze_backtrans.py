@@ -4,11 +4,12 @@ Because the baseline (pilot.jsonl) is seed 42 with limit 100 and this run is see
 with limit 30, the FIRST 30 items are the same indices. We score B and C against
 those 30 items' ground truth and compare to baseline for the paired subset.
 """
-import json, re, random
+import json, os, re, random
 from datasets import load_dataset
 
-BASE   = r"C:\Users\oguzc\ai-team\research\harness\results\pilot.jsonl"          # 100
-BC     = r"C:\Users\oguzc\ai-team\research\harness\results\pilot_backtrans_bc.jsonl"  # 30
+HERE   = os.path.dirname(os.path.abspath(__file__))
+BASE   = os.path.join(HERE, "results", "pilot.jsonl")                # 100
+BC     = os.path.join(HERE, "results", "pilot_backtrans_bc.jsonl")   # 30
 
 ds = list(load_dataset("alibayram/turkish_mmlu", split="mmlu"))
 rng = random.Random(42)
