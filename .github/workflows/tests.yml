@@ -1,0 +1,29 @@
+name: tests
+
+# First machine gate in this repo: the analysis hand-check suite
+# (harness/test_analyzer.py) is executed on every push/PR instead of being run
+# by hand. It is API-free: it synthesises a JSONL log, runs the real
+# analyze_pilot_audit.py over it, and asserts the statistics
+# (Wilson CI, McNemar exact, Bonferroni family) against hand-computed values.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  harness-selftest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: harness
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.11"
+          enable-cache: true
+      - name: Sync locked harness environment
+        run: uv sync --frozen
+      - name: Statistics hand-check suite
+        run: uv run python test_analyzer.py
